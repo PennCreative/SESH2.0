@@ -7,6 +7,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { getUserByUid } from '../../api/usersData';
 import { firebase } from '../client';
 
 const AuthContext = createContext();
@@ -20,11 +21,24 @@ const AuthProvider = (props) => {
   // null = application initial state, not yet loaded
   // false = user is not logged in, but the app has loaded
   // an object/value = user is logged in
-
+  const checkAndSetHandle = (userObj) => {
+    getUserByUid(userObj.uid).then((response) => {
+      if (response !== undefined) {
+        setUser((prevState) => ({
+          ...prevState, handle: response.handle,
+        }));
+      } else {
+        setUser((prevState) => ({
+          ...prevState, handle: null,
+        }));
+      }
+    });
+  };
   useEffect(() => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
         setUser(fbUser);
+        checkAndSetHandle(fbUser);
       } else {
         setUser(false);
       }
