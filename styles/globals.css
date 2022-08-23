@@ -17,6 +17,29 @@ a {
   box-sizing: border-box;
 }
 
-body {
-  background-color: #88effd;
+.logInPage {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("/parker-gibbons-Wx6oQRl7Wa0-unsplash.jpg");
+  background-size: cover;
+  background-position: center top;
+}
+.logInPage img {
+  width: 50vw;
+}
+
+.logInPage button {
+  background: #42bccd;
+  color: white;
+  margin-top: 1rem; 
+}
+.btn-primary {
+  background: #42bccd;
+  color: white;
+}
+.navLogo {
+  height: 2rem;
 }
