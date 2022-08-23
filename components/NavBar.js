@@ -34,7 +34,7 @@ export default function NavBar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link passHref href="/">
+              <Link passHref href="/profile">
                 <a className="nav-link">
                   <h5><BsPersonCircle /></h5>
                 </a>

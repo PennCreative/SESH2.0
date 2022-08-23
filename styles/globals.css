@@ -16,7 +16,19 @@ a {
 * {
   box-sizing: border-box;
 }
-
+.mainPage {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.home {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 1rem;
+}
 .logInPage {
   height: 100vh;
   width: 100vw;
@@ -42,4 +54,8 @@ a {
 }
 .navLogo {
   height: 2rem;
+}
+.cardForm {
+  width: 40vw;
+  margin: 0;
 }

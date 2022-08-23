@@ -6,7 +6,7 @@ function Home() {
 
   return (
     <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
+      className="home"
     >
       <ProfileForm />
     </div>
