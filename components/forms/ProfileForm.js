@@ -16,6 +16,7 @@ import { signOut } from '../../utils/auth';
 const initialState = {
   firstName: '',
   lastName: '',
+  type: 'person',
   handle: '',
   image: '',
   ride: '',
@@ -27,7 +28,6 @@ function ProfileForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user, checkAndSetHandle } = useAuth();
-
   useEffect(() => {
     if (obj.handle) setFormInput(obj);
   }, [obj]);
@@ -64,33 +64,34 @@ function ProfileForm({ obj }) {
   //     });
   //   }
   // };
+  console.warn();
   return (
     <div onSubmit={handleSubmit} className="card cardForm text-center text-dark bg-light mb-3">
       <div className="card-header">
-        {obj.handle ? 'Update' : 'Create' } Profile
+        {user.handle ? 'Update' : 'Create' } Profile
       </div>
       <div className="card-body">
         <Row className="mb-3">
 
           <Form.Group as={Col} controlId="image">
             <Form.Label>Profile Image</Form.Label>
-            <Form.Control type="url" placeholder="Image Url" />
+            <Form.Control onChange={handleChange} type="url" name="image" placeholder="Image Url" />
           </Form.Group>
           <Form.Group as={Col} controlId="handle">
             <Form.Label>Nickname</Form.Label>
             <InputGroup className="mb-2">
               <InputGroup.Text>@</InputGroup.Text>
-              <Form.Control placeholder="Username" />
+              <Form.Control value={user.handle} onChange={handleChange} type="text" name="handle" placeholder="Username" />
             </InputGroup>
           </Form.Group>
           <Form.Group as={Col} controlId="ride">
             <Form.Label>Ride</Form.Label>
-            <Form.Select defaultValue="Choose...">
-              <option>Skateboard</option>
-              <option>Longboard</option>
-              <option>BMX</option>
-              <option>Scooter</option>
-              <option>Heelys</option>
+            <Form.Select value={user.ride} onChange={handleChange} name="ride" defaultValue="Choose...">
+              <option value="Skateboard">Skateboard</option>
+              <option value="Longboard">Longboard</option>
+              <option value="Bmx">BMX</option>
+              <option value="Scooter">Scooter</option>
+              <option value="Heelys">Heelys</option>
             </Form.Select>
           </Form.Group>
 
@@ -99,12 +100,12 @@ function ProfileForm({ obj }) {
 
           <Form.Group as={Col} controlId="firstName">
             <Form.Label>First Name</Form.Label>
-            <Form.Control onChange={handleChange} placeholder="Johnny" />
+            <Form.Control value={user.firstName} onChange={handleChange} name="firstName" type="text" placeholder="John" />
           </Form.Group>
 
           <Form.Group as={Col} controlId="lastName">
             <Form.Label>Last Name</Form.Label>
-            <Form.Control onChange={handleChange} placeholder="Doe" />
+            <Form.Control onChange={handleChange} name="lastName" type="text" placeholder="Doe" />
           </Form.Group>
 
         </Row>
@@ -112,12 +113,12 @@ function ProfileForm({ obj }) {
         <Row className="mb-3">
           <Form.Group as={Col} controlId="city">
             <Form.Label>City</Form.Label>
-            <Form.Control onChange={handleChange} placeholder="City" />
+            <Form.Control onChange={handleChange} name="city" type="text" placeholder="City" />
           </Form.Group>
 
           <Form.Group as={Col} controlId="state">
             <Form.Label>State</Form.Label>
-            <Form.Control onChange={handleChange} placeholder="State" />
+            <Form.Control value={user.state} onChange={handleChange} name="state" type="text" placeholder="State" />
           </Form.Group>
         </Row>
         <ButtonGroup vertical>

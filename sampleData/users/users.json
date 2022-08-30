@@ -3,6 +3,7 @@
   "handle": "mikeyp",
   "firstName": "Michael",
   "lastName": "Pennington",
+  "type": "person",
   "city": "Nashville",
   "state": "Tennessee",
   "ride": "longboard",
