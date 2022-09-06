@@ -16,6 +16,7 @@ import { signOut } from '../../utils/auth';
 const initialState = {
   firstName: '',
   lastName: '',
+  type: 'person',
   handle: '',
   image: '',
   ride: '',
@@ -23,7 +24,7 @@ const initialState = {
   state: '',
 };
 
-function ProfileForm({ obj }) {
+export default function ProfileForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user, checkAndSetHandle } = useAuth();
@@ -64,33 +65,34 @@ function ProfileForm({ obj }) {
   //     });
   //   }
   // };
+
   return (
     <div onSubmit={handleSubmit} className="card cardForm text-center text-dark bg-light mb-3">
       <div className="card-header">
-        {obj.handle ? 'Update' : 'Create' } Profile
+        {user.handle ? 'Update' : 'Create' } Profile
       </div>
       <div className="card-body">
         <Row className="mb-3">
 
           <Form.Group as={Col} controlId="image">
             <Form.Label>Profile Image</Form.Label>
-            <Form.Control type="url" placeholder="Image Url" />
+            <Form.Control value={formInput.image} onChange={handleChange} type="url" name="image" placeholder="Image Url" />
           </Form.Group>
           <Form.Group as={Col} controlId="handle">
             <Form.Label>Nickname</Form.Label>
             <InputGroup className="mb-2">
               <InputGroup.Text>@</InputGroup.Text>
-              <Form.Control placeholder="Username" />
+              <Form.Control value={formInput.handle} onChange={handleChange} type="text" name="handle" placeholder="Username" />
             </InputGroup>
           </Form.Group>
           <Form.Group as={Col} controlId="ride">
             <Form.Label>Ride</Form.Label>
-            <Form.Select defaultValue="Choose...">
-              <option>Skateboard</option>
-              <option>Longboard</option>
-              <option>BMX</option>
-              <option>Scooter</option>
-              <option>Heelys</option>
+            <Form.Select value={formInput.ride} onChange={handleChange} name="ride" defaultValue="Choose...">
+              <option value="Skateboard">Skateboard</option>
+              <option value="Longboard">Longboard</option>
+              <option value="Bmx">BMX</option>
+              <option value="Scooter">Scooter</option>
+              <option value="Heelys">Heelys</option>
             </Form.Select>
           </Form.Group>
 
@@ -99,12 +101,12 @@ function ProfileForm({ obj }) {
 
           <Form.Group as={Col} controlId="firstName">
             <Form.Label>First Name</Form.Label>
-            <Form.Control onChange={handleChange} placeholder="Johnny" />
+            <Form.Control value={formInput.firstName} onChange={handleChange} name="firstName" type="text" placeholder="John" />
           </Form.Group>
 
           <Form.Group as={Col} controlId="lastName">
             <Form.Label>Last Name</Form.Label>
-            <Form.Control onChange={handleChange} placeholder="Doe" />
+            <Form.Control value={formInput.lastName} onChange={handleChange} name="lastName" type="text" placeholder="Doe" />
           </Form.Group>
 
         </Row>
@@ -112,12 +114,12 @@ function ProfileForm({ obj }) {
         <Row className="mb-3">
           <Form.Group as={Col} controlId="city">
             <Form.Label>City</Form.Label>
-            <Form.Control onChange={handleChange} placeholder="City" />
+            <Form.Control value={formInput.city} onChange={handleChange} name="city" type="text" placeholder="City" />
           </Form.Group>
 
           <Form.Group as={Col} controlId="state">
             <Form.Label>State</Form.Label>
-            <Form.Control onChange={handleChange} placeholder="State" />
+            <Form.Control value={formInput.state} onChange={handleChange} name="state" type="text" placeholder="State" />
           </Form.Group>
         </Row>
         <ButtonGroup vertical>
@@ -153,5 +155,3 @@ ProfileForm.propTypes = {
 ProfileForm.defaultProps = {
   obj: initialState,
 };
-
-export default ProfileForm;

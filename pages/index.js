@@ -1,5 +1,4 @@
 // import { useAuth } from '../utils/context/authContext';
-import ProfileForm from '../components/forms/ProfileForm';
 
 function Home() {
   // const { user } = useAuth();
@@ -8,7 +7,7 @@ function Home() {
     <div
       className="home"
     >
-      <ProfileForm />
+      <h1>HOME</h1>
     </div>
   );
 }
