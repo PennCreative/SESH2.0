@@ -2,6 +2,7 @@
 // import { useRouter } from 'next/router';
 // import Link from 'next/link';
 import PropTypes from 'prop-types';
+import ProfilePagination from './ProfilePagination';
 // import { useAuth } from '../utils/context/authContext';
 
 export default function ProfilePage(
@@ -35,7 +36,7 @@ export default function ProfilePage(
             </div>
           </div>
           <div className="profileRightSide">
-            <h1>Right Side</h1>
+            <ProfilePagination />
           </div>
         </div>
       </div>

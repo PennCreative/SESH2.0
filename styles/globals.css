@@ -75,24 +75,22 @@ a {
   display: flex;
   align-items: center;
   flex-flow: column nowrap;
-  background: lightcoral;
 }
 .bannerImg {
   width: 95vw;
-  height: 33%;
+  height: 60rem;
   background-repeat: none;
   background-size: cover;
   background-position: center;
   border-radius: .5rem;
 }
 .profileContent {
+  padding: .5rem;
   height: 300%;
   width: 95vw;
-  background: lightyellow;
   display: flex;
 }
 .profileLeftSide {
-  background: lightcyan;
   width: 40%;
   height: 100%;
 }
@@ -103,7 +101,9 @@ a {
   object-fit: cover;
 }
 .profileRightSide {
-  background: lightgreen;
   height: 100%;
   width: 60%;
+}
+textarea {
+  resize: none;
 }
