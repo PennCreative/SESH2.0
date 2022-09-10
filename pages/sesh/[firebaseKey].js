@@ -16,7 +16,7 @@ export default function ShowSesh() {
 
   return (
     <>
-      <SeshCard key={sesh.firebaseKey} seshObj={sesh} />
+      <SeshCard seshObj={sesh} firebaseKey={firebaseKey} />
     </>
   );
 }

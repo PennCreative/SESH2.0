@@ -1,31 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getPosts } from '../../api/postsData';
+import { getSinglePost } from '../../api/postsData';
 import PostCard from '../../components/PostCard';
 // import { useAuth } from '../../utils/context/authContext';
 
-export default function IndPinPage(onUpdate) {
+export default function ViewPost() {
   const router = useRouter();
-  const [posts, setposts] = useState([]);
+  const [post, setpost] = useState([]);
   const { firebaseKey } = router.query;
   // const { user } = useAuth();
 
-  const getAllPostDetails = () => {
-    getPosts().then((postsArray) => {
-      setposts(postsArray.filter((post) => post.user === post?.user.handle));
-    });
+  const getPostDetails = () => {
+    getSinglePost(firebaseKey).then(setpost);
   };
 
   useEffect(() => {
-    getAllPostDetails(firebaseKey);
+    getPostDetails(firebaseKey);
   }, [firebaseKey]);
-
   return (
     <>
-      {posts?.map((post) => (
-        <PostCard postObj={getAllPostDetails} key={post.firebaseKey} onUpdate={onUpdate} />
-      ))}
+      <PostCard postObj={post} firebaseKey={firebaseKey} />
     </>
   );
 }

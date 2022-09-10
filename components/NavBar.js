@@ -30,9 +30,9 @@ export default function NavBar() {
             <img className="navLogo" src="navbarLogo.png" alt="logo" />
           </a>
         </Link>
-        <Link passHref href="../sessions">
+        <Link passHref href="../sesh">
           <a className="nav-link">
-            Sessions
+            Find a Sesh
           </a>
         </Link>
 

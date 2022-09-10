@@ -18,8 +18,8 @@ const getSingleSesh = (firebaseKey) => new Promise((resolve, reject) => {
 const createSesh = (seshObj) => new Promise((resolve, reject) => {
   axios.post(`${dbUrl}/sesh.json`, seshObj)
     .then((response) => {
-      const payload = { firebaseKey: response.data.title };
-      axios.patch(`${dbUrl}/sesh/${response.data.title}.json`, payload)
+      const payload = { firebaseKey: response.data.name };
+      axios.patch(`${dbUrl}/sesh/${response.data.name}.json`, payload)
         .then(resolve);
     }).catch(reject);
 });

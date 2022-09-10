@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useAuth } from '../utils/context/authContext';
 import { deletePost } from '../api/postsData';
@@ -13,16 +14,17 @@ export default function PostCard({ postObj }) {
       deletePost(postObj.firebaseKey).then(() => router.push('/'));
     }
   };
-
   return (
     <Card>
       <Card.Header>{user.handle}</Card.Header>
       <Card.Body>
-        <Card.Title>Special title treatment</Card.Title>
+        <Card.Title>{postObj?.firebaseKey}</Card.Title>
         <Card.Text>
-          With supporting text below as a natural lead-in to additional content.
+          {postObj?.post}
         </Card.Text>
-        <Button variant="link">Go somewhere</Button>
+        <Link href={`/post/edit/${postObj?.firebaseKey}`} passHref>
+          <Button variant="info">EDIT</Button>
+        </Link>
         <Button variant="link" onClick={deleteThisPost}>Delete Post</Button>
       </Card.Body>
     </Card>
@@ -34,17 +36,8 @@ PostCard.propTypes = {
     name: PropTypes.string,
     image: PropTypes.string,
     link: PropTypes.string,
-    description: PropTypes.string,
+    post: PropTypes.string,
     time: PropTypes.number,
     firebaseKey: PropTypes.string,
-  }),
-};
-
-PostCard.defaultProps = {
-  postObj: {
-    name: '',
-    image: '',
-    firebaseKey: '',
-    link: '',
-  },
+  }).isRequired,
 };

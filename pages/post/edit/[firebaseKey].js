@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PostForm from '../../../components/forms/PostForm';
-import getSinglePost from '../../../api/postsData';
+import { getSinglePost } from '../../../api/postsData';
 
-export default function EditPin() {
+export default function EditPost() {
   const [editPost, setEditPost] = useState({});
   const router = useRouter();
   const { firebaseKey } = router.query;
