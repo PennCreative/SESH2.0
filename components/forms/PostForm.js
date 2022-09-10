@@ -45,7 +45,7 @@ export default function PostForm({ obj }) {
       <Card className="postCardForm">
         <Card.Body>
           <Form.Group className="mb-3" controlId="post">
-            <Form.Control as="textarea" rows={3} value={formInput.image} onChange={handleChange} type="text" name="post" placeholder="What's on your mind" />
+            <Form.Control as="textarea" rows={3} value={formInput.post} onChange={handleChange} type="text" name="post" placeholder="What's on your mind" />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={handleSubmit}>
             {obj.firebaseKey ? 'Update' : 'Create'} Post
