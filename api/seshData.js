@@ -9,6 +9,11 @@ const getAllSessions = () => new Promise((resolve, reject) => {
     .then((response) => resolve(Object.values(response.data)))
     .catch((error) => reject(error));
 });
+const getSingleSesh = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/sesh/${firebaseKey}.json`)
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+});
 
 const createSesh = (seshObj) => new Promise((resolve, reject) => {
   axios.post(`${dbUrl}/sesh.json`, seshObj)
@@ -25,13 +30,14 @@ const updateSesh = (seshObj) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const deleteSesh = (seshFirebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}/sesh/${seshFirebaseKey}.json`)
+const deleteSesh = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.delete(`${dbUrl}/sesh/${firebaseKey}.json`)
     .then(resolve).catch(reject);
 });
 
 export {
   getAllSessions,
+  getSingleSesh,
   deleteSesh,
   createSesh,
   updateSesh,

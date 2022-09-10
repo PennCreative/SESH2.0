@@ -1,9 +1,11 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
+import { useRouter } from 'next/router';
 import PostForm from './forms/PostForm';
 
 export default function ProfilePagination() {
+  const router = useRouter();
   return (
     <Tabs
       defaultActiveKey="home"
@@ -15,11 +17,15 @@ export default function ProfilePagination() {
         <PostForm />
       </Tab>
       <Tab eventKey="profile" title="Sessions">
-        <Button variant="primary" type="submit">Create Session</Button>
+        <Button
+          variant="primary"
+          type="submit"
+          onClick={() => {
+            router.push('/sesh/new');
+          }}
+        >Create Session
+        </Button>
       </Tab>
-      {/* <Tab eventKey="contact" title="Contact">
-                <h1>Conact</h1>
-              </Tab> */}
     </Tabs>
   );
 }
