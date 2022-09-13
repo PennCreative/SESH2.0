@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 // import { useRouter } from 'next/router';
-// import Link from 'next/link';
+import Link from 'next/link';
+import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import ProfilePagination from './ProfilePagination';
 // import { useAuth } from '../utils/context/authContext';
@@ -25,6 +26,9 @@ export default function ProfilePage(
             backgroundImage: "url('https://images.rove.me/w_1920,q_85/avc8ocqzzgeuoydqoapa/norway-longboarding.jpg')",
           }}
         />
+        <Link href={`/profile/edit/${handle}`} passHref>
+          <Button variant="info">EDIT</Button>
+        </Link>
         <div className="profileContent">
           <div className="profileLeftSide">
             <img className="profilePic" src={image} alt="profile pic" />

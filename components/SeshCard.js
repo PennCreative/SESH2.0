@@ -3,38 +3,41 @@ import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { useAuth } from '../utils/context/authContext';
+// import { useAuth } from '../utils/context/authContext';
 import { deleteSesh } from '../api/seshData';
 
-export default function PostCard({ postObj }) {
-  const { user } = useAuth();
+export default function SeshCard({ seshObj }) {
   const router = useRouter();
   const deleteThisSesh = () => {
-    if (window.confirm(`Delete ${postObj.firebaseKey}?`)) {
-      deleteSesh(postObj.firebaseKey).then(() => router.push('/sessions'));
+    if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
+      deleteSesh(seshObj.firebaseKey).then(() => router.push('/sesh'));
     }
   };
-  console.warn(postObj);
+  console.warn(seshObj);
   return (
     <Card>
-      <Card.Header>{postObj?.firebaseKey}</Card.Header>
+      <Card.Header>{seshObj?.city}, {seshObj?.state}</Card.Header>
       <Card.Body>
-        <Card.Title>{user.handle}</Card.Title>
+        <Card.Title>{seshObj?.creator}</Card.Title>
         <Card.Text>
-          With supporting text below as a natural lead-in to additional content.
+          {seshObj?.description}
         </Card.Text>
-        <Link href={`/post/edit/${postObj?.firebaseKey}`} passHref>
+        <Link href={`/sesh/edit/${seshObj?.firebaseKey}`} passHref>
           <Button variant="info">EDIT</Button>
         </Link>
         <Button variant="link" onClick={deleteThisSesh}>Delete Sesh</Button>
+        <Button variant="link" onClick={deleteThisSesh}>Attend</Button>
       </Card.Body>
     </Card>
   );
 }
 
-PostCard.propTypes = {
-  postObj: PropTypes.shape({
+SeshCard.propTypes = {
+  seshObj: PropTypes.shape({
     title: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    creator: PropTypes.string,
     name: PropTypes.string,
     image: PropTypes.string,
     link: PropTypes.string,
@@ -43,12 +46,3 @@ PostCard.propTypes = {
     firebaseKey: PropTypes.string,
   }).isRequired,
 };
-
-// PostCard.defaultProps = {
-//   postObj: {
-//     name: '',
-//     image: '',
-//     firebaseKey: '',
-//     link: '',
-//   },
-// };

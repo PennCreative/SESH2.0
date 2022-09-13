@@ -41,7 +41,7 @@ export default function SeshForm({ obj }) {
     e.preventDefault();
     if (obj.firebaseKey) {
       updateSesh(formInput)
-        .then(() => router.push(`/sesh/${obj.firebaseKey}`));
+        .then(() => router.push('/sesh'));
     } else {
       const payload = {
         ...formInput, creator: user.handle, time: new Date().getTime(),
