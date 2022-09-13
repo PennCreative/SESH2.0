@@ -6,8 +6,7 @@ import Link from 'next/link';
 // import { useAuth } from '../utils/context/authContext';
 import { deleteSesh } from '../api/seshData';
 
-export default function PostCard({ seshObj }) {
-  // const { user } = useAuth();
+export default function SeshCard({ seshObj }) {
   const router = useRouter();
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
@@ -27,13 +26,13 @@ export default function PostCard({ seshObj }) {
           <Button variant="info">EDIT</Button>
         </Link>
         <Button variant="link" onClick={deleteThisSesh}>Delete Sesh</Button>
-        <Button variant="link">Attend</Button>
+        <Button variant="link" onClick={deleteThisSesh}>Attend</Button>
       </Card.Body>
     </Card>
   );
 }
 
-PostCard.propTypes = {
+SeshCard.propTypes = {
   seshObj: PropTypes.shape({
     title: PropTypes.string,
     city: PropTypes.string,
@@ -47,12 +46,3 @@ PostCard.propTypes = {
     firebaseKey: PropTypes.string,
   }).isRequired,
 };
-
-// PostCard.defaultProps = {
-//   seshObj: {
-//     name: '',
-//     image: '',
-//     firebaseKey: '',
-//     link: '',
-//   },
-// };
