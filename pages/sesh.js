@@ -11,7 +11,7 @@ export default function ShowAllSessions() {
   useEffect(() => {
     getAllSessions().then(setAllSesh);
   }, []);
-  console.warn(allSesh);
+
   return (
     <>
       <Button

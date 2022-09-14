@@ -1,20 +1,33 @@
 import axios from 'axios';
 import { clientCredentials } from '../utils/client';
-// import { createNotification } from './notificationsData';
-// import { getSingleSesh } from './seshData';
-// import { getUserByHandle } from './usersData';
+import { getSingleSesh, getAttendees } from './seshData';
 
 const dbUrl = clientCredentials.databaseURL;
 
-const createAttendance = (attObj, user, seshObj) => new Promise((resolve, reject) => {
+const createAttendance = (attObj) => new Promise((resolve, reject) => {
   axios.post(`${dbUrl}/attendance.json`, attObj)
     .then((response) => {
-      const payload = { attendeeId: user.handle, eventId: seshObj.firebaseKey };
+      const payload = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/attendance/${response.data.name}.json`, payload)
         .then(resolve);
     }).catch(reject);
 });
 
-export default {
+const viewAttendanceDetails = (seshFirebaseKey) => new Promise((resolve, reject) => {
+  Promise.all([getSingleSesh(seshFirebaseKey), getAttendees(seshFirebaseKey)])
+    .then(([seshObject, seshAttendeesArray]) => {
+      resolve({ ...seshObject, attendees: seshAttendeesArray });
+    }).catch((error) => reject(error));
+});
+
+const removeAttendance = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.delete(`${dbUrl}/attendance/${firebaseKey}.json`)
+    .then(() => resolve('removed'))
+    .catch((error) => reject(error));
+});
+
+export {
   createAttendance,
+  viewAttendanceDetails,
+  removeAttendance,
 };

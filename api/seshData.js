@@ -35,10 +35,17 @@ const deleteSesh = (firebaseKey) => new Promise((resolve, reject) => {
     .then(resolve).catch(reject);
 });
 
+const getAttendees = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/attendance.json?orderBy="eventId"&equalTo="${firebaseKey}"`)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch((error) => reject(error));
+});
+
 export {
   getAllSessions,
   getSingleSesh,
   deleteSesh,
   createSesh,
   updateSesh,
+  getAttendees,
 };

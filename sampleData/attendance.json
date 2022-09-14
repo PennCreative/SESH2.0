@@ -3,5 +3,15 @@
   "attendeeId": "mikeyp",
   "eventId": "-NBc2wF4ZVpMDe-irMer",
   "firebaseKey": "sample"
+},
+"sample1": {
+  "attendeeId": "scotty2hotty",
+  "eventId": "-NBc2wF4ZVpMDe-irMer",
+  "firebaseKey": "s2h445"
+},
+"sample2": {
+  "attendeeId": "liljon",
+  "eventId": "-NBc2wF4ZVpMDe-irMer",
+  "firebaseKey": "lj615"
 }
 }
