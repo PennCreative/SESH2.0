@@ -34,7 +34,7 @@ export default function PostForm({ obj }) {
       updatePost(formInput)
         .then(() => router.push('/posts'));
     } else {
-      const payload = { ...formInput, user: user.handle, time: new Date().getTime() };
+      const payload = { ...formInput, creator: user.handle, time: new Date().getTime() };
       createPost(payload).then(() => {
         router.push('/posts');
       });
@@ -60,6 +60,7 @@ PostForm.propTypes = {
   obj: PropTypes.shape({
     post: PropTypes.string,
     time: PropTypes.string,
+    creator: PropTypes.string,
     uid: PropTypes.string,
     firebaseKey: PropTypes.string,
   }),

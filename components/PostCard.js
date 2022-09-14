@@ -3,11 +3,10 @@ import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { useAuth } from '../utils/context/authContext';
+// import { useAuth } from '../utils/context/authContext';
 import { deletePost } from '../api/postsData';
 
 export default function PostCard({ postObj }) {
-  const { user } = useAuth();
   const router = useRouter();
   const deleteThisPost = () => {
     if (window.confirm(`Delete ${postObj.firebaseKey}?`)) {
@@ -16,7 +15,7 @@ export default function PostCard({ postObj }) {
   };
   return (
     <Card>
-      <Card.Header>{user.handle}</Card.Header>
+      <Card.Header>{postObj?.creator}</Card.Header>
       <Card.Body>
         <Card.Title>{postObj?.firebaseKey}</Card.Title>
         <Card.Text>
@@ -34,6 +33,7 @@ export default function PostCard({ postObj }) {
 PostCard.propTypes = {
   postObj: PropTypes.shape({
     name: PropTypes.string,
+    creator: PropTypes.string,
     image: PropTypes.string,
     link: PropTypes.string,
     post: PropTypes.string,
