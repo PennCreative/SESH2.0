@@ -36,6 +36,7 @@ export default function SeshCard({ obj }) {
         <Card.Body>
           <Card.Title>{obj.title}</Card.Title>
           <Card.Subtitle>@{obj.creator}</Card.Subtitle>
+          <Card.Subtitle>{obj.time}</Card.Subtitle>
           <Card.Text>
             {obj.city}, {obj.state}
           </Card.Text>
@@ -87,7 +88,7 @@ SeshCard.propTypes = {
     image: PropTypes.string,
     link: PropTypes.string,
     description: PropTypes.string,
-    time: PropTypes.number,
+    time: PropTypes.string,
     firebaseKey: PropTypes.string,
   }).isRequired,
 };

@@ -24,17 +24,18 @@ const initialState = {
 
 export default function SeshForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(obj.contest);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
     if (obj.firebaseKey) setFormInput(obj);
+    // setChecked(obj.contest);
   }, [obj, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setChecked(e.target.checked);
+    // setChecked(e.target.checked);
     setFormInput((prevState) => ({
       ...prevState,
       [name]: value,
@@ -48,7 +49,7 @@ export default function SeshForm({ obj }) {
         .then(() => router.push('/sesh'));
     } else {
       const payload = {
-        ...formInput, creator: user.handle, time: new Date().getTime(),
+        ...formInput, creator: user.handle, time: new Date().toLocaleDateString(),
       };
       createSesh(payload).then(() => {
         router.push('/sesh');
@@ -62,24 +63,30 @@ export default function SeshForm({ obj }) {
       </div>
       <div className="card-body">
         <Row className="mb-3">
+          <Form.Group as={Col} controlId="image">
+            <Form.Label>Photo of Spot</Form.Label>
+            <InputGroup className="mb-2">
+              <Form.Control value={formInput.image} onChange={handleChange} type="text" name="title" placeholder="Classic Skate" />
+            </InputGroup>
+          </Form.Group>
           <Form.Group as={Col} controlId="title">
             <Form.Label>Title</Form.Label>
             <InputGroup className="mb-2">
               <Form.Control value={formInput.title} onChange={handleChange} type="text" name="title" placeholder="Classic Skate" />
             </InputGroup>
           </Form.Group>
-          <Form.Group className="mb-3" id="formGridCheckbox">
+          {/* <Form.Group className="mb-3" id="formGridCheckbox">
             <Col xs="mb-3" className="competition">
               <Form.Check
                 type="checkbox"
                 id="contest"
-                checked={checked}
+                defaultChecked={checked}
                 value={checked}
                 onChange={handleChange}
                 label="Competition"
               />
             </Col>
-          </Form.Group>
+          </Form.Group> */}
         </Row>
 
         <Row className="mb-3">
@@ -106,7 +113,7 @@ export default function SeshForm({ obj }) {
           </Form.Group>
         </Row>
         <Button variant="primary" type="submit" onClick={handleSubmit}>
-          {obj.handle ? 'Update' : 'Create'} Sesh
+          {obj.firebaseKey ? 'Update' : 'Create'} Sesh
         </Button>
 
       </div>
