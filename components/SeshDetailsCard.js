@@ -30,14 +30,15 @@ export default function SeshDetailsCard({ seshObj }) {
   };
   useEffect(() => {
     checkIfAttending();
-  }, [attendanceDetails, attending]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
       deleteSesh(seshObj.firebaseKey).then(() => router.push('/sesh'));
     }
   };
-
+  console.warn(seshObj);
   return (
     <Card>
       <Card.Body>
@@ -47,6 +48,7 @@ export default function SeshDetailsCard({ seshObj }) {
         <Link href={`/profile/${seshObj?.creator}`} passHref>
           <sup>@{seshObj?.creator}</sup>
         </Link>
+        <sub>{seshObj?.time}</sub>
         <Card.Text>
           {seshObj?.description}
           <br />
@@ -104,7 +106,7 @@ SeshDetailsCard.propTypes = {
     image: PropTypes.string,
     link: PropTypes.string,
     description: PropTypes.string,
-    time: PropTypes.number,
+    time: PropTypes.string,
     firebaseKey: PropTypes.string,
   }).isRequired,
 };
