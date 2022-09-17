@@ -93,12 +93,27 @@ a {
 .profileLeftSide {
   width: 40%;
   height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  text-align: center;
+}
+.profileLeftSide h5 {
+  color: #42bccd;
 }
 .profilePic {
   width: 12rem;
   height: 12rem;
-  border-radius: 50%;
+  border-radius: 10%;
   object-fit: cover;
+}
+.btnGroup {
+  width: 66%;
+  display: flex;
+  justify-content: space-around;
+}
+.lowerUDS p {
+  text-align: left;
 }
 .profileRightSide {
   height: 100%;
@@ -106,4 +121,28 @@ a {
 }
 textarea {
   resize: none;
+}
+.seshCardContainer {
+  width: 90%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.seshDisplayContainer {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.seshcard {
+  width: 20rem;
+  margin: 1rem;
+}
+.seshCardImg {
+  height: 10rem;
+  border-radius: .3rem;
+  object-position: center;
+  object-fit: cover;
+  box-shadow: 0rem .25rem .25rem rgba(79, 75, 111, 0.4);
 }

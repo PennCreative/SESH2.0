@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { getSingleSesh } from '../../api/seshData';
-import SeshCard from '../../components/SeshCard';
+import SeshDetailsCard from '../../components/SeshDetailsCard';
 
 export default function ShowSesh() {
   const router = useRouter();
@@ -12,11 +12,9 @@ export default function ShowSesh() {
     getSingleSesh(firebaseKey).then(setSesh);
   }, [firebaseKey]);
 
-  console.warn(firebaseKey);
-
   return (
     <>
-      <SeshCard seshObj={sesh} firebaseKey={firebaseKey} />
+      <SeshDetailsCard seshObj={sesh} firebaseKey={firebaseKey} />
     </>
   );
 }

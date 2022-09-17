@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
+// import { createAttendance } from '../../api/attendanceData';
 import { useAuth } from '../../utils/context/authContext';
 import { createSesh, updateSesh } from '../../api/seshData';
 
@@ -17,11 +18,13 @@ const initialState = {
   city: '',
   state: '',
   time: '',
+  image: 'defaultImg.png',
   contest: false,
 };
 
 export default function SeshForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
+  const [checked, setChecked] = useState(false);
   const router = useRouter();
   const { user } = useAuth();
 
@@ -31,6 +34,7 @@ export default function SeshForm({ obj }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setChecked(e.target.checked);
     setFormInput((prevState) => ({
       ...prevState,
       [name]: value,
@@ -68,9 +72,10 @@ export default function SeshForm({ obj }) {
             <Col xs="mb-3" className="competition">
               <Form.Check
                 type="checkbox"
-                value={formInput.contest}
+                id="contest"
+                checked={checked}
+                value={checked}
                 onChange={handleChange}
-                id="autoSizingCheck2"
                 label="Competition"
               />
             </Col>
@@ -86,12 +91,12 @@ export default function SeshForm({ obj }) {
 
         <Row className="mb-3">
           <Form.Group as={Col} controlId="city">
-            <Form.Label>Murfressboro</Form.Label>
+            <Form.Label>City</Form.Label>
             <Form.Control value={formInput.city} onChange={handleChange} name="city" type="text" placeholder="City" />
           </Form.Group>
 
           <Form.Group as={Col} controlId="state">
-            <Form.Label>TN</Form.Label>
+            <Form.Label>State</Form.Label>
             <Form.Control value={formInput.state} onChange={handleChange} name="state" type="text" placeholder="State" />
           </Form.Group>
 
@@ -122,6 +127,7 @@ SeshForm.propTypes = {
     contest: PropTypes.bool,
     title: PropTypes.string,
     firebaseKey: PropTypes.string,
+    image: PropTypes.string,
     uid: PropTypes.string,
     handle: PropTypes.string,
   }),

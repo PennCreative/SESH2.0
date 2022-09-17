@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useAuth } from '../utils/context/authContext';
-import { deleteSesh } from '../api/seshData';
 import { createAttendance, viewAttendanceDetails, removeAttendance } from '../api/attendanceData';
 
-export default function SeshCard({ seshObj }) {
-  const router = useRouter();
+export default function SeshCard({ obj }) {
   const { user } = useAuth();
   const [attendanceDetails, setAttendanceDetails] = useState({});
-  // const [attendees, setAttendees] = useState(null);
   const [attending, setAttending] = useState();
   const [mySesh, setMySesh] = useState({});
-  const eventId = seshObj?.firebaseKey;
+  const eventId = obj?.firebaseKey;
 
   const checkIfAttending = () => {
     viewAttendanceDetails(eventId).then((response) => {
       setAttendanceDetails(response);
-      const match = attendanceDetails.attendees?.filter((obj) => obj.attendeeId === user.handle);
+      const match = attendanceDetails.attendees?.filter((attObj) => attObj.attendeeId === user.handle);
       if (match?.length > 0) {
         setAttending(true);
         setMySesh(...match);
@@ -29,67 +25,60 @@ export default function SeshCard({ seshObj }) {
       }
     });
   };
-
   useEffect(() => {
     checkIfAttending();
-  }, [attendanceDetails]);
-
-  const deleteThisSesh = () => {
-    if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
-      deleteSesh(seshObj.firebaseKey).then(() => router.push('/sesh'));
-    }
-  };
+  }, [attendanceDetails, attending]);
 
   return (
-    <Card>
-      <Card.Header>{seshObj?.city}, {seshObj?.state}</Card.Header>
-      <Card.Body>
-        <Card.Title>{seshObj?.creator}</Card.Title>
-        <Card.Text>
-          {seshObj?.description}
-        </Card.Text>
-        <Link href={`/sesh/${seshObj?.firebaseKey}`} passHref>
-          <Button variant="info">View</Button>
-        </Link>
-        <Link href={`/sesh/edit/${seshObj?.firebaseKey}`} passHref>
-          <Button variant="info">EDIT</Button>
-        </Link>
-        <Button variant="link" onClick={deleteThisSesh}>Delete Sesh</Button>
-        {attending
-          ? (
-            <>
-              <Button
-                type="button"
-                className="btn editBtn btn-dark"
-                id={mySesh.firebaseKey}
-                onClick={() => {
-                  removeAttendance(mySesh.firebaseKey).then(() => checkIfAttending());
-                }}
-              >Nevermind
-              </Button>
-            </>
-          )
-          : (
-            <Button
-              type="button"
-              onClick={() => {
-                const payload = {
-                  attendeeId: user.handle,
-                  eventId: seshObj.firebaseKey,
-                };
-                createAttendance(payload).then(() => checkIfAttending());
-              }}
-              className="btn editBtn btn-danger"
-            >Attend
-            </Button>
-          )}
-      </Card.Body>
-    </Card>
+    <>
+      <Card className="seshcard">
+        <Card.Img className="seshCardImg" variant="top" src={obj.image} />
+        <Card.Body>
+          <Card.Title>{obj.title}</Card.Title>
+          <Card.Subtitle>@{obj.creator}</Card.Subtitle>
+          <Card.Text>
+            {obj.city}, {obj.state}
+          </Card.Text>
+          <Card.Body>
+            <Link href={`/sesh/${obj?.firebaseKey}`} passHref>
+              <Button variant="link">View</Button>
+            </Link>
+            {attending
+              ? (
+                <>
+                  <Button
+                    type="button"
+                    className="btn editBtn btn-dark"
+                    id={mySesh.firebaseKey}
+                    onClick={() => {
+                      removeAttendance(mySesh.firebaseKey).then(() => checkIfAttending());
+                    }}
+                  >Nevermind
+                  </Button>
+                </>
+              )
+              : (
+                <Button
+                  type="button"
+                  onClick={() => {
+                    const payload = {
+                      attendeeId: user.handle,
+                      eventId: obj.firebaseKey,
+                    };
+                    createAttendance(payload).then(() => checkIfAttending());
+                  }}
+                  className="btn editBtn btn-info"
+                >Attend
+                </Button>
+              )}
+          </Card.Body>
+        </Card.Body>
+      </Card>
+    </>
   );
 }
-
 SeshCard.propTypes = {
-  seshObj: PropTypes.shape({
+  obj: PropTypes.shape({
     title: PropTypes.string,
     city: PropTypes.string,
     state: PropTypes.string,

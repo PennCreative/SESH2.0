@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-// import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
@@ -8,14 +7,11 @@ import ProfilePagination from './ProfilePagination';
 
 export default function ProfilePage(
   {
-    firstName, lastName, handle, image, city, state, ride,
+    firstName, lastName, handle, image, city, state, ride, postObj, attendingObj, eventObj,
   },
 ) {
-  // const router = useRouter();
-  // const { user } = useAuth();
-  // const host = 'localhost:3000';
-  // const path = router.asPath;
-  console.warn(firstName);
+  const posts = { ...postObj };
+  console.warn(posts);
   return (
     <>
       <div className="profilePage">
@@ -26,21 +22,25 @@ export default function ProfilePage(
             backgroundImage: "url('https://images.rove.me/w_1920,q_85/avc8ocqzzgeuoydqoapa/norway-longboarding.jpg')",
           }}
         />
-        <Link href={`/profile/edit/${handle}`} passHref>
-          <Button variant="info">EDIT</Button>
-        </Link>
         <div className="profileContent">
           <div className="profileLeftSide">
             <img className="profilePic" src={image} alt="profile pic" />
             <div className="userDetailSection">
-              <h5>{ride}</h5>
               <h3>{firstName} {lastName}</h3>
-              <sub>@{handle}</sub>
-              <p>{city}, {state}</p>
+              <h5>@{handle}</h5>
+            </div>
+            <div className="btnGroup">
+              <Link href={`/profile/edit/${handle}`} passHref>
+                <Button variant="info">EDIT</Button>
+              </Link>
+              <Button variant="info">Share</Button>
+            </div>
+            <div className="userDetailSection lowerUDS">
+              <p>{ride}&#39;r outta {city}, {state}</p>
             </div>
           </div>
           <div className="profileRightSide">
-            <ProfilePagination />
+            <ProfilePagination posts={postObj} attending={attendingObj} event={eventObj} />
           </div>
         </div>
       </div>
