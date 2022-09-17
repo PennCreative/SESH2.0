@@ -36,7 +36,11 @@ const deleteUser = (handle) => new Promise((resolve, reject) => {
     .then((response) => resolve(response))
     .catch((error) => reject(error));
 });
-
+const getAttending = (handle) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/attendance.json?orderBy="attendeeId"&equalTo="${handle}"`)
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+});
 export {
   getUserByUid,
   getUserByHandle,
@@ -44,4 +48,5 @@ export {
   updateUser,
   getAllUsers,
   deleteUser,
+  getAttending,
 };

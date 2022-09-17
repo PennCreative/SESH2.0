@@ -13,18 +13,22 @@ export default function ShowAllSessions() {
   }, []);
 
   return (
-    <>
-      <Button
-        variant="primary"
-        type="submit"
-        onClick={() => {
-          router.push('/sesh/new');
-        }}
-      >Create Session
-      </Button>
-      {allSesh?.map((sesh) => (
-        <SeshCard seshObj={sesh} key={sesh.firebaseKey} />
-      ))};
-    </>
+    <div className="seshCardContainer">
+      <div className="createSesh">
+        <Button
+          variant="primary"
+          type="submit"
+          onClick={() => {
+            router.push('/sesh/new');
+          }}
+        >Create Session
+        </Button>
+      </div>
+      <div className="seshDisplayContainer">
+        {allSesh?.map((sesh) => (
+          <SeshCard obj={sesh} key={sesh.firebaseKey} />
+        ))}
+      </div>
+    </div>
   );
 }
