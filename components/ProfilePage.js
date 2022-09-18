@@ -7,11 +7,10 @@ import ProfilePagination from './ProfilePagination';
 
 export default function ProfilePage(
   {
-    firstName, lastName, handle, image, city, state, ride, postObj, attendingObj, eventObj,
+    firstName, lastName, handle, image, city, state, ride, postObj, attendingObj, eventObj, onUpdate,
   },
 ) {
-  const posts = { ...postObj };
-  console.warn(posts);
+  // const posts = { ...postObj };
   return (
     <>
       <div className="profilePage">
@@ -40,7 +39,7 @@ export default function ProfilePage(
             </div>
           </div>
           <div className="profileRightSide">
-            <ProfilePagination posts={postObj} attending={attendingObj} event={eventObj} />
+            <ProfilePagination handle={handle} posts={postObj} attending={attendingObj} event={eventObj} onUpdate={onUpdate} />
           </div>
         </div>
       </div>

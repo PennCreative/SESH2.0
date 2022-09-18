@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useAuth } from '../utils/context/authContext';
 import { deleteSesh } from '../api/seshData';
-import { createAttendance, viewAttendanceDetails, removeAttendance } from '../api/attendanceData';
+import { viewAttendanceDetails } from '../api/mergedData';
+import { createAttendance, removeAttendance } from '../api/attendanceData';
 
 export default function SeshDetailsCard({ seshObj }) {
   const router = useRouter();
@@ -30,15 +31,13 @@ export default function SeshDetailsCard({ seshObj }) {
   };
   useEffect(() => {
     checkIfAttending();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [attendanceDetails, attending]);
 
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
       deleteSesh(seshObj.firebaseKey).then(() => router.push('/sesh'));
     }
   };
-  console.warn(seshObj);
   return (
     <Card>
       <Card.Body>
@@ -53,9 +52,6 @@ export default function SeshDetailsCard({ seshObj }) {
           {seshObj?.description}
           <br />
         </Card.Text>
-        <Link href={`/sesh/${seshObj?.firebaseKey}`} passHref>
-          <Button variant="info">View</Button>
-        </Link>
         {seshObj?.creator === user.handle ? (
           <Link href={`/sesh/edit/${seshObj?.firebaseKey}`} passHref>
             <Button variant="info">EDIT</Button>

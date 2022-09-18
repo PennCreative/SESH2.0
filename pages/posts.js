@@ -14,7 +14,7 @@ export default function ShowAllPosts() {
     <>
       <PostForm />
       {allPosts?.map((post) => (
-        <PostCard postObj={post} key={post.firebaseKey} />
+        <PostCard postObj={post} key={post.firebaseKey} onUpdate={getPosts()} />
       ))};
     </>
   );

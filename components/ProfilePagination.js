@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
@@ -6,20 +7,29 @@ import { useRouter } from 'next/router';
 import PostForm from './forms/PostForm';
 import SeshCard from './SeshCard';
 import PostCard from './PostCard';
-import { getAllSessions } from '../api/seshData';
+import { getSeshByCreator } from '../api/seshData';
+// import { viewMySeshes } from '../api/mergedData';
 import { getPosts } from '../api/postsData';
 
-export default function ProfilePagination() {
+export default function ProfilePagination({ handle, onUpdate }) {
   const router = useRouter();
-  const [allSesh, setAllSesh] = useState();
+  const [mySeshes, setMySeshes] = useState([]);
   const [allPosts, setAllPosts] = useState();
+
+  const getAllPosts = () => {
+    getPosts().then(setAllPosts);
+  };
+  const getMySeshes = () => {
+    getSeshByCreator(handle).then(setMySeshes);
+  };
 
   // seshChild.map(getSingleSesh(eventId).then();)
   useEffect(() => {
-    getPosts().then(setAllPosts);
-    getAllSessions().then(setAllSesh);
+    getAllPosts();
+    getMySeshes();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.warn(allPosts);
+
   return (
     <Tabs
       defaultActiveKey="home"
@@ -28,9 +38,9 @@ export default function ProfilePagination() {
       className="mb-3"
     >
       <Tab eventKey="home" title="Posts">
-        <PostForm />
+        <PostForm onUpdate={getAllPosts} />
         {allPosts?.map((post) => (
-          <PostCard postObj={post} key={post.firebaseKey} />
+          <PostCard postObj={post} key={post.firebaseKey} onUpdate={getAllPosts} />
         ))}
       </Tab>
       <Tab eventKey="profile" title="Sessions">
@@ -43,11 +53,10 @@ export default function ProfilePagination() {
         >Create Session
         </Button>
         <div className="mySeshes">
-          <p>Attending:</p>
-          {allSesh?.map((sesh) => (
-            <SeshCard obj={sesh} key={sesh.firebaseKey} />
+          <p>Created:</p>
+          {mySeshes?.map((sesh) => (
+            <SeshCard obj={sesh} key={sesh.firebaseKey} onUpdate={onUpdate} />
           ))}
-
         </div>
       </Tab>
     </Tabs>

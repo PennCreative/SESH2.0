@@ -20,7 +20,7 @@ export default function ViewPost() {
   }, [firebaseKey]);
   return (
     <>
-      <PostCard postObj={post} firebaseKey={firebaseKey} />
+      <PostCard postObj={post} firebaseKey={firebaseKey} onUpdate={() => null} />
     </>
   );
 }

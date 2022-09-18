@@ -11,7 +11,7 @@ const initialState = {
   post: '',
 };
 
-export default function PostForm({ obj }) {
+export default function PostForm({ obj, onUpdate }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user } = useAuth();
@@ -36,7 +36,8 @@ export default function PostForm({ obj }) {
     } else {
       const payload = { ...formInput, creator: user.handle, time: new Date().getTime() };
       createPost(payload).then(() => {
-        router.push('/posts');
+        onUpdate();
+        setFormInput(initialState);
       });
     }
   };
@@ -64,6 +65,7 @@ PostForm.propTypes = {
     uid: PropTypes.string,
     firebaseKey: PropTypes.string,
   }),
+  onUpdate: PropTypes.func.isRequired,
 };
 
 PostForm.defaultProps = {

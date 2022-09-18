@@ -126,7 +126,7 @@ export default function ProfileForm({ obj }) {
           <Button variant="primary" type="submit" onClick={handleSubmit}>
             {obj.handle ? 'Update' : 'Create'} Profile
           </Button>
-          <Button variant="link">Continue as Guest</Button>
+          {/* <Button variant="link">Continue as Guest</Button> */}
           <Button variant="danger" type="submit" onClick={signOut}>
             <GoSignOut />
           </Button>
