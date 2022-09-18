@@ -2,18 +2,28 @@ import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
+// import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from '../utils/context/authContext';
-import { createAttendance, viewAttendanceDetails, removeAttendance } from '../api/attendanceData';
+import { deleteSesh } from '../api/seshData';
+import { viewAttendanceDetails } from '../api/mergedData';
+import { createAttendance, removeAttendance } from '../api/attendanceData';
 
-export default function SeshCard({ obj }) {
+export default function SeshCard({ obj, onUpdate }) {
   const { user } = useAuth();
+  // const router = useRouter();
   const [attendanceDetails, setAttendanceDetails] = useState({});
   const [attending, setAttending] = useState();
   const [mySesh, setMySesh] = useState({});
-  const eventId = obj?.firebaseKey;
+
+  const deleteThisSesh = () => {
+    if (window.confirm(`Delete ${obj.title}?`)) {
+      deleteSesh(obj.firebaseKey).then(() => onUpdate());
+    }
+  };
 
   const checkIfAttending = () => {
+    const eventId = obj?.firebaseKey;
     viewAttendanceDetails(eventId).then((response) => {
       setAttendanceDetails(response);
       const match = attendanceDetails.attendees?.filter((attObj) => attObj.attendeeId === user.handle);
@@ -27,6 +37,7 @@ export default function SeshCard({ obj }) {
   };
   useEffect(() => {
     checkIfAttending();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attendanceDetails, attending]);
 
   return (
@@ -42,8 +53,18 @@ export default function SeshCard({ obj }) {
           </Card.Text>
           <Card.Body>
             <Link href={`/sesh/${obj?.firebaseKey}`} passHref>
-              <Button variant="link">View</Button>
+              <Button variant="info">View</Button>
             </Link>
+            {obj?.creator === user.handle
+              ? (
+                <>
+                  <Link href={`/sesh/edit/${obj?.firebaseKey}`} passHref>
+                    <Button variant="info">EDIT</Button>
+                  </Link>
+                  <Button variant="link" onClick={deleteThisSesh}>Delete Sesh</Button>
+                </>
+              )
+              : ''}
             {attending
               ? (
                 <>
@@ -52,7 +73,7 @@ export default function SeshCard({ obj }) {
                     className="btn editBtn btn-dark"
                     id={mySesh.firebaseKey}
                     onClick={() => {
-                      removeAttendance(mySesh.firebaseKey).then(() => checkIfAttending());
+                      removeAttendance(mySesh.firebaseKey).then(() => { checkIfAttending(); onUpdate(); });
                     }}
                   >Nevermind
                   </Button>
@@ -91,4 +112,5 @@ SeshCard.propTypes = {
     time: PropTypes.string,
     firebaseKey: PropTypes.string,
   }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };

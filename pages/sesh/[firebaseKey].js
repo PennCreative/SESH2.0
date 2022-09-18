@@ -11,10 +11,10 @@ export default function ShowSesh() {
   useEffect(() => {
     getSingleSesh(firebaseKey).then(setSesh);
   }, [firebaseKey]);
-  console.warn(sesh);
+
   return (
     <>
-      <SeshDetailsCard seshObj={sesh} firebaseKey={firebaseKey} />
+      <SeshDetailsCard seshObj={sesh} firebaseKey={firebaseKey} onUpdate={() => null} />
     </>
   );
 }

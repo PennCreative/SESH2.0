@@ -46,7 +46,7 @@ export default function SeshForm({ obj }) {
     e.preventDefault();
     if (obj.firebaseKey) {
       updateSesh(formInput)
-        .then(() => router.push('/sesh'));
+        .then(() => router.push(`/sesh/${obj.firebaseKey}`));
     } else {
       const payload = {
         ...formInput, creator: user.handle, time: new Date().toLocaleDateString(),
@@ -66,7 +66,7 @@ export default function SeshForm({ obj }) {
           <Form.Group as={Col} controlId="image">
             <Form.Label>Photo of Spot</Form.Label>
             <InputGroup className="mb-2">
-              <Form.Control value={formInput.image} onChange={handleChange} type="text" name="title" placeholder="Classic Skate" />
+              <Form.Control value={formInput.image} onChange={handleChange} type="url" name="image" placeholder="" />
             </InputGroup>
           </Form.Group>
           <Form.Group as={Col} controlId="title">
