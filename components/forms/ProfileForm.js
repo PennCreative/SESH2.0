@@ -87,7 +87,7 @@ export default function ProfileForm({ obj }) {
           </Form.Group>
           <Form.Group as={Col} controlId="ride">
             <Form.Label>Ride</Form.Label>
-            <Form.Select value={formInput.ride} onChange={handleChange} name="ride" defaultValue="Choose...">
+            <Form.Select value={formInput.ride} onChange={handleChange} name="ride">
               <option value="Skateboard">Skateboard</option>
               <option value="Longboard">Longboard</option>
               <option value="Bmx">BMX</option>
