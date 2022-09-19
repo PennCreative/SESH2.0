@@ -11,7 +11,7 @@ import { getSeshByCreator } from '../api/seshData';
 // import { viewMySeshes } from '../api/mergedData';
 import { getPosts } from '../api/postsData';
 
-export default function ProfilePagination({ handle, onUpdate }) {
+export default function ProfilePagination({ handle }) {
   const router = useRouter();
   const [mySeshes, setMySeshes] = useState([]);
   const [allPosts, setAllPosts] = useState();
@@ -55,7 +55,7 @@ export default function ProfilePagination({ handle, onUpdate }) {
         <div className="mySeshes">
           <p>Created:</p>
           {mySeshes?.map((sesh) => (
-            <SeshCard obj={sesh} key={sesh.firebaseKey} onUpdate={onUpdate} />
+            <SeshCard obj={sesh} key={sesh.firebaseKey} onUpdate={getMySeshes} />
           ))}
         </div>
       </Tab>
