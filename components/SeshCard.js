@@ -13,8 +13,8 @@ export default function SeshCard({ obj, onUpdate }) {
   const { user } = useAuth();
   // const router = useRouter();
   const [attendanceDetails, setAttendanceDetails] = useState({});
-  const [attending, setAttending] = useState();
-  const [mySesh, setMySesh] = useState({});
+  const [attending, setAttending] = useState([]);
+  const [mySesh, setMySesh] = useState([]);
 
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${obj.title}?`)) {
@@ -38,7 +38,7 @@ export default function SeshCard({ obj, onUpdate }) {
   useEffect(() => {
     checkIfAttending();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [attendanceDetails, attending]);
+  }, []);
 
   return (
     <>
