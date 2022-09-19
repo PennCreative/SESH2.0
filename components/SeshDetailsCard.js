@@ -31,7 +31,7 @@ export default function SeshDetailsCard({ seshObj }) {
   useEffect(() => {
     checkIfAttending();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [attendanceDetails, attending, mySesh]);
+  }, []);
 
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
@@ -95,16 +95,14 @@ export default function SeshDetailsCard({ seshObj }) {
 }
 
 SeshDetailsCard.propTypes = {
-  seshObj: PropTypes.shape({
-    title: PropTypes.string,
-    city: PropTypes.string,
-    state: PropTypes.string,
-    creator: PropTypes.string,
-    name: PropTypes.string,
-    image: PropTypes.string,
-    link: PropTypes.string,
-    description: PropTypes.string,
-    time: PropTypes.string,
-    firebaseKey: PropTypes.string,
-  }).isRequired,
-};
+  title: PropTypes.string,
+  city: PropTypes.string,
+  state: PropTypes.string,
+  creator: PropTypes.string,
+  name: PropTypes.string,
+  image: PropTypes.string,
+  link: PropTypes.string,
+  description: PropTypes.string,
+  time: PropTypes.string,
+  firebaseKey: PropTypes.string,
+}.isRequired;
