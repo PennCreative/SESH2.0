@@ -3,12 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
-// import PropTypes from 'prop-types';
 import { getUserByHandle } from '../../api/usersData';
 import { getAttending } from '../../api/attendanceData';
 import { getPosts } from '../../api/postsData';
 import { getAllSessions } from '../../api/seshData';
-// import ProfilePage from '../../components/ProfilePage';
 import ProfilePagination from '../../components/ProfilePagination';
 
 export default function ViewProfile() {
@@ -37,8 +35,6 @@ export default function ViewProfile() {
 
   return (
     <>
-      {/* <ProfilePage firstName={userDetails.firstName} lastName={userDetails.lastName} handle={userDetails.handle} image={userDetails.image} city={userDetails.city} state={userDetails.state} ride={userDetails.ride} postObj={posts} attendingObj={attending} eventObj={event} onUpdate={update} /> */}
-
       <div className="profilePage">
         <div
           className="bannerImg"
@@ -72,13 +68,3 @@ export default function ViewProfile() {
     </>
   );
 }
-
-// ProfilePage.propTypes = {
-//   firstName: PropTypes.string,
-//   lastName: PropTypes.string,
-//   handle: PropTypes.string,
-//   image: PropTypes.string,
-//   city: PropTypes.string,
-//   state: PropTypes.string,
-//   ride: PropTypes.string,
-// }.isRequired;

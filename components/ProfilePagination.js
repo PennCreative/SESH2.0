@@ -8,7 +8,6 @@ import PostForm from './forms/PostForm';
 import SeshCard from './SeshCard';
 import PostCard from './PostCard';
 import { getSeshByCreator } from '../api/seshData';
-// import { viewMySeshes } from '../api/mergedData';
 import { getPosts } from '../api/postsData';
 
 export default function ProfilePagination({ handle }) {
@@ -23,7 +22,6 @@ export default function ProfilePagination({ handle }) {
     getSeshByCreator(handle).then(setMySeshes);
   };
 
-  // seshChild.map(getSingleSesh(eventId).then();)
   useEffect(() => {
     getAllPosts();
     getMySeshes();

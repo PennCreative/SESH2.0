@@ -3,14 +3,12 @@ import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import ProfilePagination from './ProfilePagination';
-// import { useAuth } from '../utils/context/authContext';
 
 export default function ProfilePage(
   {
     firstName, lastName, handle, image, city, state, ride, postObj, attendingObj, eventObj, onUpdate,
   },
 ) {
-  // const posts = { ...postObj };
   return (
     <>
       <div className="profilePage">
