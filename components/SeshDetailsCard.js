@@ -13,11 +13,11 @@ export default function SeshDetailsCard({ seshObj }) {
   const router = useRouter();
   const { user } = useAuth();
   const [attendanceDetails, setAttendanceDetails] = useState({});
-  const [attending, setAttending] = useState();
+  const [attending, setAttending] = useState([]);
   const [mySesh, setMySesh] = useState({});
 
   const checkIfAttending = () => {
-    viewAttendanceDetails(seshObj.firebaseKey).then((response) => {
+    viewAttendanceDetails(seshObj?.firebaseKey).then((response) => {
       setAttendanceDetails(response);
       const match = attendanceDetails.attendees?.filter((obj) => obj.attendeeId === user.handle);
       if (match?.length > 0) {
@@ -54,12 +54,13 @@ export default function SeshDetailsCard({ seshObj }) {
           <br />
         </Card.Text>
         {seshObj?.creator === user.handle ? (
-          <Link href={`/sesh/edit/${seshObj?.firebaseKey}`} passHref>
-            <Button variant="info">EDIT</Button>
-          </Link>
-
+          <>
+            <Link href={`/sesh/edit/${seshObj?.firebaseKey}`} passHref>
+              <Button variant="info">EDIT</Button>
+            </Link>
+            <Button variant="link" onClick={deleteThisSesh}>Delete Sesh</Button>
+          </>
         ) : '' }
-        <Button variant="link" onClick={deleteThisSesh}>Delete Sesh</Button>
         {attending
           ? (
             <>

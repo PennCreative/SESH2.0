@@ -6,7 +6,7 @@ import SeshDetailsCard from '../../components/SeshDetailsCard';
 export default function ShowSesh() {
   const router = useRouter();
   const { firebaseKey } = router.query;
-  const [sesh, setSesh] = useState();
+  const [sesh, setSesh] = useState({});
 
   useEffect(() => {
     getSingleSesh(firebaseKey).then(setSesh);
