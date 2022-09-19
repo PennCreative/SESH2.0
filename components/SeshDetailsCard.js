@@ -15,10 +15,9 @@ export default function SeshDetailsCard({ seshObj }) {
   const [attendanceDetails, setAttendanceDetails] = useState({});
   const [attending, setAttending] = useState();
   const [mySesh, setMySesh] = useState({});
-  const eventId = seshObj?.firebaseKey;
 
   const checkIfAttending = () => {
-    viewAttendanceDetails(eventId).then((response) => {
+    viewAttendanceDetails(seshObj.firebaseKey).then((response) => {
       setAttendanceDetails(response);
       const match = attendanceDetails.attendees?.filter((obj) => obj.attendeeId === user.handle);
       if (match?.length > 0) {
@@ -31,13 +30,15 @@ export default function SeshDetailsCard({ seshObj }) {
   };
   useEffect(() => {
     checkIfAttending();
-  }, [attendanceDetails, attending]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attendanceDetails, attending, mySesh]);
 
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
       deleteSesh(seshObj.firebaseKey).then(() => router.push('/sesh'));
     }
   };
+
   return (
     <Card>
       <Card.Body>
