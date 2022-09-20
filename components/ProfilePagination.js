@@ -5,7 +5,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/router';
 import PostForm from './forms/PostForm';
-import SeshCard from './SeshCard';
+import MySeshCard from './MySeshCard';
 import PostCard from './PostCard';
 import { getSeshByCreator } from '../api/seshData';
 import { getPosts } from '../api/postsData';
@@ -29,7 +29,6 @@ export default function ProfilePagination({ handle }) {
     getMySeshes();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <Tabs
       defaultActiveKey="home"
@@ -38,12 +37,12 @@ export default function ProfilePagination({ handle }) {
       className="mb-3"
     >
       <Tab eventKey="home" title="Posts">
-        {user.handle === handle ? <PostForm onUpdate={getAllPosts} /> : ''}
+        {user.user.handle === handle ? <PostForm onUpdate={getAllPosts} /> : ''}
         {allPosts?.map((post) => (
           <PostCard postObj={post} key={post.firebaseKey} onUpdate={getAllPosts} />
         ))}
       </Tab>
-      <Tab eventKey="profile" title="Sessions">
+      <Tab eventKey="profile" title="My Sessions">
         <Button
           variant="primary"
           type="submit"
@@ -53,9 +52,8 @@ export default function ProfilePagination({ handle }) {
         >Create Session
         </Button>
         <div className="mySeshes">
-          <p>Created:</p>
           {mySeshes?.map((sesh) => (
-            <SeshCard obj={sesh} key={sesh.firebaseKey} onUpdate={getMySeshes} />
+            <MySeshCard obj={sesh} key={sesh.firebaseKey} onUpdate={getMySeshes} />
           ))}
         </div>
       </Tab>

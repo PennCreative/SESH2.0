@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { BsFillTrashFill } from 'react-icons/bs';
+import { AiFillEdit } from 'react-icons/ai';
 import Link from 'next/link';
 import { useAuth } from '../utils/context/authContext';
 import { deleteSesh } from '../api/seshData';
@@ -32,7 +33,7 @@ export default function SeshDetailsCard({ seshObj }) {
   useEffect(() => {
     checkIfAttending();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [attendanceDetails]);
+  }, []);
 
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
@@ -63,7 +64,7 @@ export default function SeshDetailsCard({ seshObj }) {
             {seshObj?.creator === user.handle ? (
               <>
                 <Link href={`/sesh/edit/${seshObj?.firebaseKey}`} passHref>
-                  <Button className="editBtn" variant="info">EDIT</Button>
+                  <Button className="editBtn" variant="primary"><AiFillEdit /></Button>
                 </Link>
                 <Button variant="danger" onClick={deleteThisSesh}><BsFillTrashFill /></Button>
               </>
@@ -73,7 +74,7 @@ export default function SeshDetailsCard({ seshObj }) {
                 <>
                   <Button
                     type="button"
-                    variant="info"
+                    variant="primary"
                     className="btn editBtn"
                     id={mySesh.firebaseKey}
                     onClick={() => {
@@ -86,6 +87,7 @@ export default function SeshDetailsCard({ seshObj }) {
               : (
                 <Button
                   type="button"
+                  variant="primary"
                   onClick={() => {
                     const payload = {
                       attendeeId: user.handle,
@@ -93,7 +95,7 @@ export default function SeshDetailsCard({ seshObj }) {
                     };
                     createAttendance(payload).then(() => checkIfAttending());
                   }}
-                  className="btn editBtn btn-info"
+                  className="btn editBtn"
                 >Attend
                 </Button>
               )}

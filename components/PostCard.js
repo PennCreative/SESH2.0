@@ -13,11 +13,11 @@ export default function PostCard({ postObj, onUpdate }) {
     }
   };
   return (
-    <Card>
+    <Card className="postCard">
       <Link href={`/profile/${postObj?.creator}`} passHref>
         <Card.Title>{postObj?.creator}</Card.Title>
       </Link>
-      <Card.Subtitle>{postObj?.time}</Card.Subtitle>
+      <Card.Subtitle><sup>{postObj?.time}</sup></Card.Subtitle>
       <Card.Body>
         <Card.Title>{postObj?.post}</Card.Title>
         {postObj?.creator === user.handle

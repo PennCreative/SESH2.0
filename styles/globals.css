@@ -195,3 +195,25 @@ textarea {
 .cardDetailsBtn .btn{
   margin: .25rem;
 }
+
+.postCard {
+  padding: .25rem;
+}
+.smallBtn {
+  border: hidden;
+}
+.smallCard {
+  display: flex;
+  align-items: center;
+}
+.smallCard .card-title {
+  margin: 0;
+  padding: 0;
+}
+.smallCard .card-body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
