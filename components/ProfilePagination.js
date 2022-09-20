@@ -9,9 +9,11 @@ import SeshCard from './SeshCard';
 import PostCard from './PostCard';
 import { getSeshByCreator } from '../api/seshData';
 import { getPosts } from '../api/postsData';
+import { useAuth } from '../utils/context/authContext';
 
 export default function ProfilePagination({ handle }) {
   const router = useRouter();
+  const user = useAuth();
   const [mySeshes, setMySeshes] = useState([]);
   const [allPosts, setAllPosts] = useState();
 
@@ -36,7 +38,7 @@ export default function ProfilePagination({ handle }) {
       className="mb-3"
     >
       <Tab eventKey="home" title="Posts">
-        <PostForm onUpdate={getAllPosts} />
+        {user.handle === handle ? <PostForm onUpdate={getAllPosts} /> : ''}
         {allPosts?.map((post) => (
           <PostCard postObj={post} key={post.firebaseKey} onUpdate={getAllPosts} />
         ))}

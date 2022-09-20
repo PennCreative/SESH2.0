@@ -14,7 +14,10 @@ export default function PostCard({ postObj, onUpdate }) {
   };
   return (
     <Card>
-      <Card.Header>{postObj?.creator}</Card.Header>
+      <Link href={`/profile/${postObj?.creator}`} passHref>
+        <Card.Title>{postObj?.creator}</Card.Title>
+      </Link>
+      <Card.Subtitle>{postObj?.time}</Card.Subtitle>
       <Card.Body>
         <Card.Title>{postObj?.post}</Card.Title>
         {postObj?.creator === user.handle
@@ -39,7 +42,7 @@ PostCard.propTypes = {
     image: PropTypes.string,
     link: PropTypes.string,
     post: PropTypes.string,
-    time: PropTypes.number,
+    time: PropTypes.string,
     firebaseKey: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,

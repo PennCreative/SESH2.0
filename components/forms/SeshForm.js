@@ -24,18 +24,15 @@ const initialState = {
 
 export default function SeshForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  // const [checked, setChecked] = useState(obj.contest);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
     if (obj.firebaseKey) setFormInput(obj);
-    // setChecked(obj.contest);
   }, [obj, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // setChecked(e.target.checked);
     setFormInput((prevState) => ({
       ...prevState,
       [name]: value,
@@ -75,18 +72,6 @@ export default function SeshForm({ obj }) {
               <Form.Control value={formInput.title} onChange={handleChange} type="text" name="title" placeholder="Classic Skate" />
             </InputGroup>
           </Form.Group>
-          {/* <Form.Group className="mb-3" id="formGridCheckbox">
-            <Col xs="mb-3" className="competition">
-              <Form.Check
-                type="checkbox"
-                id="contest"
-                defaultChecked={checked}
-                value={checked}
-                onChange={handleChange}
-                label="Competition"
-              />
-            </Col>
-          </Form.Group> */}
         </Row>
 
         <Row className="mb-3">

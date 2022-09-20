@@ -15,5 +15,7 @@ A social platform to connect the community of action sports athletes
 
 [Netlify](https://github.com/PennCreative/SESH)
 
+[Milestones](https://github.com/PennCreative/SESH/milestones)
+
 ## 🛠 Tools
 HTML, CSS, Javascript, Postman, Firebase, React, Nextjs, React Bootstrap

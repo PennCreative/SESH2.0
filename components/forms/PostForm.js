@@ -34,7 +34,7 @@ export default function PostForm({ obj, onUpdate }) {
       updatePost(formInput)
         .then(() => router.push('/posts'));
     } else {
-      const payload = { ...formInput, creator: user.handle, time: new Date().getTime() };
+      const payload = { ...formInput, creator: user.handle, time: new Date().toLocaleDateString() };
       createPost(payload).then(() => {
         onUpdate();
         setFormInput(initialState);

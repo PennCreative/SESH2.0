@@ -36,10 +36,13 @@ export default function SeshCard({ obj, onUpdate }) {
     });
   };
   useEffect(() => {
-    checkIfAttending();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+    let isApiSubscribed = true;
+    if (isApiSubscribed) {
+      checkIfAttending();
+    }
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attendanceDetails]);
   return (
     <>
       <Card className="seshcard">

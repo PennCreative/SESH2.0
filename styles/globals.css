@@ -1,11 +1,12 @@
 @import 'bootstrap/dist/css/bootstrap.css';
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Kosugi Maru', sans-serif;
+
 }
 
 a {
@@ -154,4 +155,43 @@ textarea {
   object-position: center;
   object-fit: cover;
   box-shadow: 0rem .25rem .25rem rgba(79, 75, 111, 0.4);
+}
+.detailPage {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+.cardDetails {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  margin: 2rem;
+}
+.cardDetailImg {
+  height: 25rem;
+  width: 25rem;
+  object-fit: cover;
+}
+.cardDetailsRightSide {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+}
+.cardDetailBody {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.cardDetailSubtitle {
+  display: flex;
+}
+.upperCase {
+  text-transform: upperCase;
+}
+.cardDetailsBtn {
+  display: flex;
+  justify-content: flex-end;
+}
+.cardDetailsBtn .btn{
+  margin: .25rem;
 }
