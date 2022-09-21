@@ -23,11 +23,11 @@ export default function NavBar() {
     });
   };
   return (
-    <nav className="navbar navbar-expand-md">
+    <nav className="navbar navbar-expand-md nav">
       <div className="container-fluid">
         <Link passHref href="/">
           <a className="navbar-brand" href="#">
-            <img className="navLogo" src="navbarLogo.png" alt="logo" />
+            <img className="navLogo" src="/navbarLogo.png" alt="Sesh" />
           </a>
         </Link>
         <Link passHref href="../sesh">

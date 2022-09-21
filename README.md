@@ -17,5 +17,11 @@ A social platform to connect the community of action sports athletes
 
 [Milestones](https://github.com/PennCreative/SESH/milestones)
 
+## Features
+- Create your profile
+- Create Events/ Sessions
+- Choose to Attend events
+- Create Posts for all to see
+
 ## 🛠 Tools
 HTML, CSS, Javascript, Postman, Firebase, React, Nextjs, React Bootstrap

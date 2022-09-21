@@ -28,7 +28,8 @@ export default function ProfilePagination({ handle }) {
     getAllPosts();
     getMySeshes();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handle]);
+
   return (
     <Tabs
       defaultActiveKey="home"

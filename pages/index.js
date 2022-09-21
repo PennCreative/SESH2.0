@@ -7,7 +7,7 @@ function Home() {
     <div
       className="home"
     >
-      <h1>HOME</h1>
+      <h1>Welcome to SESH!</h1>
     </div>
   );
 }

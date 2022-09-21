@@ -1,7 +1,10 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import { BsFillTrashFill } from 'react-icons/bs';
+import { AiFillEdit } from 'react-icons/ai';
 import { useAuth } from '../utils/context/authContext';
 import { deletePost } from '../api/postsData';
 
@@ -14,22 +17,27 @@ export default function PostCard({ postObj, onUpdate }) {
   };
   return (
     <Card className="postCard">
-      <Link href={`/profile/${postObj?.creator}`} passHref>
-        <Card.Title>{postObj?.creator}</Card.Title>
-      </Link>
-      <Card.Subtitle><sup>{postObj?.time}</sup></Card.Subtitle>
-      <Card.Body>
+      <Card.Body className="left">
+        <Link href={`/profile/${postObj?.creator}`} passHref>
+          <Card.Title>{postObj?.creator}</Card.Title>
+        </Link>
+        <Card.Subtitle><sup>{postObj?.time}</sup></Card.Subtitle>
         <Card.Title>{postObj?.post}</Card.Title>
+      </Card.Body>
+      <Card.Body className="right">
         {postObj?.creator === user.handle
           ? (
             <>
-              <Link href={`/post/edit/${postObj?.firebaseKey}`} passHref>
-                <Button variant="info">EDIT</Button>
-              </Link>
-              <Button variant="link" onClick={deleteThisPost}>Delete Post</Button>
+              <ButtonGroup>
+                <Link href={`/post/edit/${postObj?.firebaseKey}`} passHref>
+                  <Button className="smallBtn" variant="outline-primary"><AiFillEdit /> </Button>
+                </Link>
+                <Button className="smallBtn" variant="outline-danger" onClick={deleteThisPost}><BsFillTrashFill /></Button>
+              </ButtonGroup>
             </>
           )
           : ''}
+
       </Card.Body>
     </Card>
   );

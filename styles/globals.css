@@ -17,6 +17,9 @@ a {
 * {
   box-sizing: border-box;
 }
+.nav {
+  width: 100%;
+}
 .navbar-nav {
   width: 100%;
   display: flex;
@@ -31,10 +34,15 @@ a {
 }
 .home {
   width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   margin: 0;
   padding: 1rem;
+
+  background: url(/pexels-airam-datoon-11990096.jpg);
+  background-size: cover;
+  background-position: center bottom;
 }
 .logInPage {
   height: 100vh;
@@ -43,7 +51,7 @@ a {
   justify-content: center;
   align-items: center;
   flex-flow: column nowrap;
-  background-image: url("/parker-gibbons-Wx6oQRl7Wa0-unsplash.jpg");
+  background-image: url(/parker-gibbons-Wx6oQRl7Wa0-unsplash.jpg);
   background-size: cover;
   background-position: center top;
 }
@@ -197,10 +205,19 @@ textarea {
 }
 
 .postCard {
-  padding: .25rem;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.right {
+  display: flex;
+  justify-content: flex-end;
+  height: 50%;
 }
 .smallBtn {
   border: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .smallCard {
   display: flex;

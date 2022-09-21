@@ -32,7 +32,7 @@ export default function PostForm({ obj, onUpdate }) {
     e.preventDefault();
     if (obj.firebaseKey) {
       updatePost(formInput)
-        .then(() => router.push('/posts'));
+        .then(() => router.push(`/profile/${obj.creator}`));
     } else {
       const payload = { ...formInput, creator: user.handle, time: new Date().toLocaleDateString() };
       createPost(payload).then(() => {

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
+import { FaShare } from 'react-icons/fa';
+import { useAuth } from '../../utils/context/authContext';
 import { getUserByHandle } from '../../api/usersData';
 // import { getAttending } from '../../api/attendanceData';
 import { getPosts } from '../../api/postsData';
@@ -12,6 +14,7 @@ import ProfilePagination from '../../components/ProfilePagination';
 export default function ViewProfile() {
   const [userDetails, setUserDetails] = useState({});
   // const [attending, setAttending] = useState({});
+  const { user } = useAuth();
   const [event, setEvent] = useState([]);
   const [posts, setPosts] = useState({});
   const router = useRouter();
@@ -32,7 +35,7 @@ export default function ViewProfile() {
     update();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handle]);
-  console.warn(handle);
+
   return (
     <>
       <div className="profilePage">
@@ -51,10 +54,15 @@ export default function ViewProfile() {
               <h5>@{userDetails.handle}</h5>
             </div>
             <div className="btnGroup">
-              <Link href={`/profile/edit/${handle}`} passHref>
-                <Button variant="info">EDIT</Button>
-              </Link>
-              <Button variant="info">Share</Button>
+              {handle === user.handle
+                ? (
+                  <Link href={`/profile/edit/${handle}`} passHref>
+                    <Button variant="primary">EDIT</Button>
+                  </Link>
+                )
+                : ''}
+
+              <Button variant="primary"><FaShare /> </Button>
             </div>
             <div className="userDetailSection lowerUDS">
               <p>{userDetails.ride}&#39;n outta {userDetails.city}, {userDetails.state}</p>
