@@ -1,13 +1,17 @@
-// import { useAuth } from '../utils/context/authContext';
-
 function Home() {
-  // const { user } = useAuth();
-
   return (
     <div
       className="home"
     >
-      <h1>Welcome to SESH!</h1>
+      <div className="homePage">
+        <h1><b>Welcome to SESH</b></h1>
+        <h3>Come Together</h3>
+        <div className="welcomeContent">
+          <p>
+            A platform bringing a niche group together.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

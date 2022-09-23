@@ -6,7 +6,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Kosugi Maru', sans-serif;
-
+  background: #fdf3fc;
 }
 
 a {
@@ -19,6 +19,7 @@ a {
 }
 .nav {
   width: 100%;
+  background: #fdf3fc;
 }
 .navbar-nav {
   width: 100%;
@@ -29,6 +30,8 @@ a {
 .mainPage {
   width: 100vw;
   height: 100vh;
+  display: flex;
+  justify-content: center;
   margin: 0;
   padding: 0;
 }
@@ -36,13 +39,24 @@ a {
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  align-items: center;
   margin: 0;
   padding: 1rem;
-
-  background: url(/pexels-airam-datoon-11990096.jpg);
+  background: url(/oleg-ivanov-F5zmI-htuUQ-unsplash.jpg);
   background-size: cover;
   background-position: center bottom;
+}
+.homePage {
+  background: #fdf3fc;
+  color: #662d9b;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 1rem;
+  height: 75vh;
+  width: 40vw;
+  border: .25rem solid #662d9b;
+  border-radius: 1rem;
 }
 .logInPage {
   height: 100vh;
@@ -51,7 +65,7 @@ a {
   justify-content: center;
   align-items: center;
   flex-flow: column nowrap;
-  background-image: url(/parker-gibbons-Wx6oQRl7Wa0-unsplash.jpg);
+  background-image: url(/pexels-airam-datoon-11990096.jpg);
   background-size: cover;
   background-position: center top;
 }
@@ -81,7 +95,7 @@ a {
 }
 .cardForm {
   width: 40vw;
-  height: 70vh;
+  height: 75vh;
   margin: 0;
 }
 .navBtn {
@@ -152,6 +166,7 @@ textarea {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+  overflow: scroll;
 }
 .seshcard {
   width: 20rem;
@@ -165,9 +180,7 @@ textarea {
   box-shadow: 0rem .25rem .25rem rgba(79, 75, 111, 0.4);
 }
 .detailPage {
-  width: 100vw;
-  display: flex;
-  justify-content: center;
+  width: 70vw;
 }
 .cardDetails {
   display: flex;
@@ -233,4 +246,10 @@ textarea {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.thePosts {
+  display: flex;
+  flex-flow: column-reverse nowrap;
+
 }

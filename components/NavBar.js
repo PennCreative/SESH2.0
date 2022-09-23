@@ -39,13 +39,6 @@ export default function NavBar() {
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link passHref href="/">
-                <a className="nav-link">
-                  <h5><BsBell /></h5>
-                </a>
-              </Link>
-            </li>
-            <li className="nav-item">
               <Button type="button" variant="outline-dark" className="btn navBtn" onClick={() => checkIfUserExistsThenRoute()}>
                 <h5><BsPersonCircle /></h5>
               </Button>

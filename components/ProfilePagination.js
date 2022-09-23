@@ -39,9 +39,11 @@ export default function ProfilePagination({ handle }) {
     >
       <Tab eventKey="home" title="Posts">
         {user.user.handle === handle ? <PostForm onUpdate={getAllPosts} /> : ''}
-        {allPosts?.map((post) => (
-          <PostCard postObj={post} key={post.firebaseKey} onUpdate={getAllPosts} />
-        ))}
+        <div className="thePosts">
+          {allPosts?.map((post) => (
+            <PostCard postObj={post} key={post.firebaseKey} onUpdate={getAllPosts} />
+          ))}
+        </div>
       </Tab>
       <Tab eventKey="profile" title="My Sessions">
         <Button
