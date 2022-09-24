@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { BsBell, BsPersonCircle, BsFillDoorOpenFill } from 'react-icons/bs';
+import { BsPersonCircle, BsFillDoorOpenFill } from 'react-icons/bs';
 import React from 'react';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
@@ -23,11 +23,11 @@ export default function NavBar() {
     });
   };
   return (
-    <nav className="navbar navbar-expand-md">
+    <nav className="navbar navbar-expand-md nav">
       <div className="container-fluid">
         <Link passHref href="/">
           <a className="navbar-brand" href="#">
-            <img className="navLogo" src="navbarLogo.png" alt="logo" />
+            <img className="navLogo" src="/navbarLogo.png" alt="Sesh" />
           </a>
         </Link>
         <Link passHref href="../sesh">
@@ -38,13 +38,6 @@ export default function NavBar() {
 
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-              <Link passHref href="/">
-                <a className="nav-link">
-                  <h5><BsBell /></h5>
-                </a>
-              </Link>
-            </li>
             <li className="nav-item">
               <Button type="button" variant="outline-dark" className="btn navBtn" onClick={() => checkIfUserExistsThenRoute()}>
                 <h5><BsPersonCircle /></h5>

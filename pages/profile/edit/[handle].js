@@ -13,5 +13,9 @@ export default function EditProfile() {
     getUserByHandle(handle).then(setEditProfile);
   }, [handle]);
 
-  return (<ProfileForm obj={editProfile} />);
+  return (
+    <div className="formPage">
+      <ProfileForm obj={editProfile} />
+    </div>
+  );
 }

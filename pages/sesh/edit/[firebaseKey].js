@@ -13,6 +13,8 @@ export default function New() {
   }, [firebaseKey]);
 
   return (
-    <SeshForm obj={editSesh} />
+    <div className="formPage">
+      <SeshForm obj={editSesh} />
+    </div>
   );
 }

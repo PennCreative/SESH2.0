@@ -1,10 +1,10 @@
 import React from 'react';
-import SeshForm from '../../components/forms/SeshForm';
+import ProfileForm from '../../components/forms/ProfileForm';
 
 export default function New() {
   return (
     <div className="formPage">
-      <SeshForm />
+      <ProfileForm />
     </div>
   );
 }
