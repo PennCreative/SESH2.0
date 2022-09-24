@@ -48,10 +48,10 @@ export default function ViewProfile() {
         />
         <div className="profileContent">
           <div className="profileLeftSide">
-            <img className="profilePic" src={userDetails.image} alt="profile pic" />
+            <img className="profilePic" src={userDetails?.image} alt="profile pic" />
             <div className="userDetailSection">
-              <h3>{userDetails.firstName} {userDetails.lastName}</h3>
-              <h5>@{userDetails.handle}</h5>
+              <h3>{userDetails?.firstName} {userDetails?.lastName}</h3>
+              <h5>@{userDetails?.handle}</h5>
             </div>
             <div className="btnGroup">
               {handle === user.handle
@@ -65,7 +65,7 @@ export default function ViewProfile() {
               <Button variant="primary"><FaShare /> </Button>
             </div>
             <div className="userDetailSection lowerUDS">
-              <p>{userDetails.ride}&#39;n outta {userDetails.city}, {userDetails.state}</p>
+              <p>{userDetails?.ride}&#39;n outta {userDetails?.city}, {userDetails?.state}</p>
             </div>
           </div>
           <div className="profileRightSide">

@@ -52,7 +52,7 @@ export default function ProfilePagination({ handle }) {
           onClick={() => {
             router.push('/sesh/new');
           }}
-        >Create Session
+        >Create a Sesh
         </Button>
         <div className="mySeshes">
           {mySeshes?.map((sesh) => (

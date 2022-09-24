@@ -92,7 +92,8 @@ export default function ProfileForm({ obj }) {
               <option value="Longboard">Longboard</option>
               <option value="Bmx">BMX</option>
               <option value="Scooter">Scooter</option>
-              <option value="Heelys">Heelys</option>
+              <option value="Heely">Heelys</option>
+              <option value="RollerBlade">Rollerblades</option>
             </Form.Select>
           </Form.Group>
 

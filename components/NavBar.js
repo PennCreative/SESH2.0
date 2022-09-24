@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { BsBell, BsPersonCircle, BsFillDoorOpenFill } from 'react-icons/bs';
+import { BsPersonCircle, BsFillDoorOpenFill } from 'react-icons/bs';
 import React from 'react';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
