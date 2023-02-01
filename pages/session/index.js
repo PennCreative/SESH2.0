@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/router';
-import { getAllSessions } from '../utils/data/api/sessionData';
-import SeshCard from '../components/SeshCard';
+import { getAllSessions } from '../../utils/data/api/sessionData';
+import SeshCard from '../../components/SeshCard';
 
 export default function ShowAllSessions() {
   const router = useRouter();

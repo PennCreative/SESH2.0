@@ -1,26 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getSinglePost } from '../../api/postsData';
+import { getPostById } from '../../utils/data/api/postData';
 import PostCard from '../../components/PostCard';
 // import { useAuth } from '../../utils/context/authContext';
 
 export default function ViewPost() {
   const router = useRouter();
   const [post, setpost] = useState([]);
-  const { firebaseKey } = router.query;
+  const { id } = router.query;
   // const { user } = useAuth();
 
   const getPostDetails = () => {
-    getSinglePost(firebaseKey).then(setpost);
+    getPostById(id).then(setpost);
   };
 
   useEffect(() => {
-    getPostDetails(firebaseKey);
-  }, [firebaseKey]);
+    getPostDetails(id);
+  }, [id]);
   return (
     <>
-      <PostCard postObj={post} firebaseKey={firebaseKey} onUpdate={() => null} />
+      <PostCard postObj={post} onUpdate={() => null} />
     </>
   );
 }

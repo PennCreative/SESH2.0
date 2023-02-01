@@ -7,8 +7,8 @@ import { useRouter } from 'next/router';
 import PostForm from './forms/PostForm';
 import MySeshCard from './MySeshCard';
 import PostCard from './PostCard';
-import { getSeshByCreator } from '../api/seshData';
-import { getPosts } from '../api/postsData';
+import { getMySessions } from '../utils/data/api/sessionData';
+import { getAllPosts } from '../utils/data/api/postData';
 import { useAuth } from '../utils/context/authContext';
 
 export default function ProfilePagination({ handle }) {
@@ -17,11 +17,11 @@ export default function ProfilePagination({ handle }) {
   const [mySeshes, setMySeshes] = useState([]);
   const [allPosts, setAllPosts] = useState();
 
-  const getAllPosts = () => {
-    getPosts().then(setAllPosts);
+  const getPosts = () => {
+    getAllPosts().then(setAllPosts);
   };
   const getMySeshes = () => {
-    getSeshByCreator(handle).then(setMySeshes);
+    getMySessions(handle).then(setMySeshes);
   };
 
   useEffect(() => {
@@ -38,10 +38,10 @@ export default function ProfilePagination({ handle }) {
       className="mb-3"
     >
       <Tab eventKey="home" title="Posts">
-        {user.user.handle === handle ? <PostForm onUpdate={getAllPosts} /> : ''}
+        {user.user.handle === handle ? <PostForm onUpdate={getPosts} /> : ''}
         <div className="thePosts">
           {allPosts?.map((post) => (
-            <PostCard postObj={post} key={post.firebaseKey} onUpdate={getAllPosts} />
+            <PostCard postObj={post} key={post.firebaseKey} onUpdate={getPosts} />
           ))}
         </div>
       </Tab>

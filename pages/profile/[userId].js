@@ -5,10 +5,10 @@ import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import { FaShare } from 'react-icons/fa';
 import { useAuth } from '../../utils/context/authContext';
-import { getUserByHandle } from '../../api/usersData';
+import { getUserById } from '../../utils/data/api/userData';
 // import { getAttending } from '../../api/attendanceData';
-import { getPosts } from '../../api/postsData';
-import { getSeshByCreator } from '../../api/seshData';
+import { getAllPosts } from '../../utils/data/api/postData';
+import { getMySessions } from '../../utils/data/api/sessionData';
 import ProfilePagination from '../../components/ProfilePagination';
 
 export default function ViewProfile() {
@@ -18,23 +18,23 @@ export default function ViewProfile() {
   const [event, setEvent] = useState([]);
   const [posts, setPosts] = useState({});
   const router = useRouter();
-  const { handle } = router.query;
+  const { id } = router.query;
 
   const profilePageDetails = () => {
-    getPosts().then(setPosts);
+    getAllPosts().then(setPosts);
   };
 
   const update = () => {
-    getSeshByCreator(handle).then(setEvent);
-    // getAttending(handle).then(setAttending);
-    getUserByHandle(handle).then(setUserDetails);
+    getMySessions(id).then(setEvent);
+    // getAttending(Id).then(setAttending);
+    getUserById(id).then(setUserDetails);
     profilePageDetails();
   };
 
   useEffect(() => {
     update();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handle]);
+  }, [id]);
 
   return (
     <>
@@ -51,12 +51,12 @@ export default function ViewProfile() {
             <img className="profilePic" src={userDetails?.image} alt="profile pic" />
             <div className="userDetailSection">
               <h3>{userDetails?.firstName} {userDetails?.lastName}</h3>
-              <h5>@{userDetails?.handle}</h5>
+              <h5>@{userDetails?.Id}</h5>
             </div>
             <div className="btnGroup">
-              {handle === user.handle
+              {id === user.Id
                 ? (
-                  <Link href={`/profile/edit/${handle}`} passHref>
+                  <Link href={`/profile/edit/${id}`} passHref>
                     <Button variant="primary">EDIT</Button>
                   </Link>
                 )
@@ -69,7 +69,7 @@ export default function ViewProfile() {
             </div>
           </div>
           <div className="profileRightSide">
-            <ProfilePagination handle={handle} posts={posts} events={event} onUpdate={update} />
+            <ProfilePagination id={id} posts={posts} events={event} onUpdate={update} />
           </div>
         </div>
       </div>

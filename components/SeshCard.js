@@ -7,14 +7,14 @@ export default function SeshCard({ obj }) {
   return (
     <>
       <Card className="seshcard">
-        <Link href={`/sesh/${obj?.firebaseKey}`} passHref>
-          <Card.Img className="seshCardImg" variant="top" src={obj.image} />
+        <Link href={`/sesh/${obj?.id}`} passHref>
+          <Card.Img className="seshCardImg" variant="top" src={obj?.creator.profile_image_url} />
         </Link>
         <Card.Body>
-          <Card.Title>{obj.title}</Card.Title>
-          <Card.Subtitle>{obj.time}</Card.Subtitle>
+          <Card.Title>{obj?.title}</Card.Title>
+          <Card.Subtitle>{obj?.address}</Card.Subtitle>
           <Card.Text>
-            {obj.city}, {obj.state}
+            {obj?.city}, {obj?.state}
           </Card.Text>
         </Card.Body>
       </Card>
@@ -24,9 +24,15 @@ export default function SeshCard({ obj }) {
 SeshCard.propTypes = {
   obj: PropTypes.shape({
     title: PropTypes.string,
+    id: PropTypes.number,
+    address: PropTypes.string,
     city: PropTypes.string,
     state: PropTypes.string,
-    creator: PropTypes.string,
+    creator: PropTypes.shape({
+      id: PropTypes.number,
+      handle: PropTypes.string,
+      profile_image_url: PropTypes.string,
+    }),
     name: PropTypes.string,
     image: PropTypes.string,
     link: PropTypes.string,

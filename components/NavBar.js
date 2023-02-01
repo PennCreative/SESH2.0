@@ -7,21 +7,23 @@ import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/router';
 import { useAuth } from '../utils/context/authContext';
 import { signOut } from '../utils/auth';
-import { getUserByUid } from '../api/usersData';
+import { getUserById } from '../utils/data/api/userData';
 
 export default function NavBar() {
   const { user } = useAuth();
   const router = useRouter();
+  const userId = user.id;
 
   const checkIfUserExistsThenRoute = () => {
-    getUserByUid(user.uid).then((response) => {
+    getUserById(user.id).then((response) => {
       if (response) {
-        router.push(`/profile/${response.handle}`);
+        router.push(`/profile/${userId}}`);
       } else {
         router.push('/profile/new');
       }
     });
   };
+
   return (
     <nav className="navbar navbar-expand-md nav">
       <div className="container-fluid">
@@ -30,7 +32,7 @@ export default function NavBar() {
             <img className="navLogo" src="/navbarLogo.png" alt="Sesh" />
           </a>
         </Link>
-        <Link passHref href="../sesh">
+        <Link passHref href="../session">
           <a className="nav-link">
             Find a Sesh
           </a>

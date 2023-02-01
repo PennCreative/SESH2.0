@@ -7,21 +7,20 @@ import { AiFillEdit } from 'react-icons/ai';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../utils/context/authContext';
-import { getSingleSesh, deleteSesh } from '../../api/seshData';
-import { viewAttendanceDetails } from '../../api/mergedData';
-import { createAttendance, removeAttendance } from '../../api/attendanceData';
+import { getSingleSession, deleteSession } from '../../utils/data/api/sessionData';
+import { createAttendance, deleteAttendance, getSessionAttendance } from '../../utils/data/api/attendanceData';
 
 export default function ShowSesh() {
   const router = useRouter();
   const { user } = useAuth();
-  const { firebaseKey } = router.query;
+  const { id } = router.query;
   const [attendanceDetails, setAttendanceDetails] = useState({});
   const [attending, setAttending] = useState([]);
   const [sesh, setSesh] = useState([]);
   const [mySesh, setMySesh] = useState([]);
 
   const checkIfAttending = () => {
-    viewAttendanceDetails(firebaseKey).then((response) => {
+    getSessionAttendance(id).then((response) => {
       setAttendanceDetails(response);
       const match = attendanceDetails.attendees?.filter((obj) => obj.attendeeId === user.handle);
       if (match?.length > 0) {
@@ -32,17 +31,18 @@ export default function ShowSesh() {
       }
     });
   };
+
   useEffect(() => {
     checkIfAttending();
   }, [attendanceDetails]);
 
   useEffect(() => {
-    getSingleSesh(firebaseKey).then(setSesh);
-  }, [firebaseKey]);
+    getSingleSession(id).then(setSesh);
+  }, [id]);
 
   const deleteThisSesh = () => {
-    if (window.confirm(`Delete ${firebaseKey}?`)) {
-      deleteSesh(firebaseKey).then(() => router.push('/sesh'));
+    if (window.confirm(`Delete ${id}?`)) {
+      deleteSession(id).then(() => router.push('/sesh'));
     }
   };
 
@@ -84,7 +84,7 @@ export default function ShowSesh() {
                       className="btn editBtn"
                       id={mySesh.firebaseKey}
                       onClick={() => {
-                        removeAttendance(mySesh.firebaseKey).then(() => checkIfAttending());
+                        deleteAttendance(mySesh.firebaseKey).then(() => checkIfAttending());
                       }}
                     >Nevermind
                     </Button>

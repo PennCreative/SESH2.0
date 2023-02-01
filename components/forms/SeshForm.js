@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 // import { createAttendance } from '../../api/attendanceData';
 import { useAuth } from '../../utils/context/authContext';
-import { createSesh, updateSesh } from '../../api/seshData';
+import { createSession, updateSession } from '../../utils/data/api/sessionData';
 
 const initialState = {
   creator: '',
@@ -28,7 +28,7 @@ export default function SeshForm({ obj }) {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (obj.firebaseKey) setFormInput(obj);
+    if (obj.id) setFormInput(obj);
   }, [obj, user]);
 
   const handleChange = (e) => {
@@ -41,14 +41,14 @@ export default function SeshForm({ obj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.firebaseKey) {
-      updateSesh(formInput)
-        .then(() => router.push(`/sesh/${obj.firebaseKey}`));
+    if (obj.id) {
+      updateSession(formInput)
+        .then(() => router.push(`/sesh/${obj.id}`));
     } else {
       const payload = {
         ...formInput, creator: user.handle, time: new Date().toLocaleDateString(),
       };
-      createSesh(payload).then(() => {
+      createSession(payload).then(() => {
         router.push('/sesh');
       });
     }
@@ -56,7 +56,7 @@ export default function SeshForm({ obj }) {
   return (
     <div onSubmit={handleSubmit} className="card cardForm text-center text-dark bg-light mb-3">
       <div className="card-header">
-        {obj.firebaseKey ? 'Update' : 'Create' } Sesh
+        {obj.id ? 'Update' : 'Create' } Sesh
       </div>
       <div className="card-body">
         <Row className="mb-3">
@@ -98,7 +98,7 @@ export default function SeshForm({ obj }) {
           </Form.Group>
         </Row>
         <Button variant="primary" type="submit" onClick={handleSubmit}>
-          {obj.firebaseKey ? 'Update' : 'Create'} Sesh
+          {obj.id ? 'Update' : 'Create'} Sesh
         </Button>
 
       </div>
@@ -118,7 +118,7 @@ SeshForm.propTypes = {
     time: PropTypes.string,
     contest: PropTypes.bool,
     title: PropTypes.string,
-    firebaseKey: PropTypes.string,
+    id: PropTypes.string,
     image: PropTypes.string,
     uid: PropTypes.string,
     handle: PropTypes.string,
