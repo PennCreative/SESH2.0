@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { AiFillEdit } from 'react-icons/ai';
 import { useAuth } from '../utils/context/authContext';
-import { deletePost } from '../api/postsData';
+import { deletePost } from '../utils/data/api/postData';
 
 export default function PostCard({ postObj, onUpdate }) {
   const { user } = useAuth();

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -6,32 +7,32 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 // import Link from 'next/link';
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { GoSignOut } from 'react-icons/go';
-import { useAuth } from '../../utils/context/authContext';
-import { createUser, updateUser } from '../../api/usersData';
-import { signOut } from '../../utils/auth';
+import { registerUser, signOut } from '../../utils/auth';
+import { updateUser } from '../../utils/data/api/userData';
+// import { useAuth } from '../../utils/context/authContext';
 
-const initialState = {
-  firstName: '',
-  lastName: '',
-  type: 'person',
-  handle: '',
-  image: '',
-  ride: '',
-  city: '',
-  state: '',
-};
+export default function ProfileForm({ user, onUpdate }) {
+  const router = useRouter;
 
-export default function ProfileForm({ obj }) {
-  const [formInput, setFormInput] = useState(initialState);
-  const router = useRouter();
-  const { user, checkAndSetHandle } = useAuth();
+  const [formInput, setFormInput] = useState({
+    firstName: '',
+    lastName: '',
+    handle: '',
+    ride: '',
+    bio: '',
+    image: '',
+    city: '',
+    state: '',
+    uid: '',
+  });
 
   useEffect(() => {
-    if (obj.handle) setFormInput(obj);
-  }, [obj]);
+    if (user.id) {
+      setFormInput(user);
+    }
+  }, [user, router]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,33 +44,29 @@ export default function ProfileForm({ obj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.handle) {
-      updateUser(obj.handle, formInput)
-        .then(() => router.push(`/profile/${obj.handle}`));
+    const userData = {
+      uid: formInput.uid,
+      first_name: formInput.firstName,
+      last_name: formInput.lastName,
+      handle: formInput.handle,
+      ride: formInput.ride,
+      bio: formInput.bio,
+      profile_image_url: formInput.image,
+      city: formInput.city,
+      state: formInput.state,
+    };
+    if (user.id) {
+      updateUser(userData, user.id);
+      router.push(`../../users/${user.id}`);
     } else {
-      const payloadValue = { ...formInput, uid: user.uid };
-      const packagedPayload = {};
-      const payloadKey = formInput.handle;
-      packagedPayload[payloadKey] = payloadValue;
-      createUser(packagedPayload).then(() => {
-        checkAndSetHandle(user);
-        router.push('/');
-      });
+      registerUser(userData).then(() => onUpdate(user.id));
     }
   };
-  // const deleteMyAccount = () => {
-  //   if (window.confirm(`Delete ${obj.handle}'s Entire Account?`)) {
-  //     deleteUserShallow(obj.handle).then(() => {
-  //       router.push('/');
-  //       checkAndSetHandle(user);
-  //     });
-  //   }
-  // };
 
   return (
     <div onSubmit={handleSubmit} className="card cardForm text-center text-dark bg-light mb-3">
       <div className="card-header">
-        {user.handle ? 'Update' : 'Create' } Profile
+        {user.id ? 'Update' : 'Create' } Profile
       </div>
       <div className="card-body">
         <Row className="mb-3">
@@ -125,7 +122,7 @@ export default function ProfileForm({ obj }) {
         </Row>
         <ButtonGroup vertical>
           <Button variant="primary" type="submit" onClick={handleSubmit}>
-            {obj.handle ? 'Update' : 'Create'} Profile
+            {user ? 'Update' : 'Create'} Profile
           </Button>
           {/* <Button variant="link">Continue as Guest</Button> */}
           <Button variant="danger" type="submit" onClick={signOut}>
@@ -141,18 +138,9 @@ export default function ProfileForm({ obj }) {
 }
 
 ProfileForm.propTypes = {
-  obj: PropTypes.shape({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    handle: PropTypes.string,
-    image: PropTypes.string,
-    ride: PropTypes.string,
-    city: PropTypes.string,
-    state: PropTypes.string,
+  user: PropTypes.shape({
     uid: PropTypes.string,
-  }),
-};
-
-ProfileForm.defaultProps = {
-  obj: initialState,
+    id: PropTypes.number,
+  }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };

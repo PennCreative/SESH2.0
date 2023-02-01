@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../utils/context/authContext';
-import { createPost, updatePost } from '../../api/postsData';
+import { createPost, updatePost } from '../../utils/data/api/postData';
 
 const initialState = {
   post: '',

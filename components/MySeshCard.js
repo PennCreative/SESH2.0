@@ -7,14 +7,14 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import { AiFillEdit } from 'react-icons/ai';
 import Link from 'next/link';
 import { useAuth } from '../utils/context/authContext';
-import { deleteSesh } from '../api/seshData';
+import { deleteSession } from '../utils/data/api/sessionData';
 
 export default function MySeshCard({ obj, onUpdate }) {
   const { user } = useAuth();
 
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${obj.title}?`)) {
-      deleteSesh(obj.firebaseKey).then(() => onUpdate());
+      deleteSession(obj.firebaseKey).then(() => onUpdate());
     }
   };
 

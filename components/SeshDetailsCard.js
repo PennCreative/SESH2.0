@@ -7,9 +7,8 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import { AiFillEdit } from 'react-icons/ai';
 import Link from 'next/link';
 import { useAuth } from '../utils/context/authContext';
-import { deleteSesh } from '../api/seshData';
-import { viewAttendanceDetails } from '../api/mergedData';
-import { createAttendance, removeAttendance } from '../api/attendanceData';
+import { deleteSession } from '../utils/data/api/sessionData';
+import { createAttendance, deleteAttendance, getSingleAttendance } from '../utils/data/api/attendanceData';
 
 export default function SeshDetailsCard({ seshObj }) {
   const router = useRouter();
@@ -19,7 +18,7 @@ export default function SeshDetailsCard({ seshObj }) {
   const [mySesh, setMySesh] = useState({});
 
   const checkIfAttending = () => {
-    viewAttendanceDetails(seshObj?.firebaseKey).then((response) => {
+    getSingleAttendance(seshObj?.firebaseKey).then((response) => {
       setAttendanceDetails(response);
       const match = attendanceDetails.attendees?.filter((obj) => obj.attendeeId === user.handle);
       if (match?.length > 0) {
@@ -37,7 +36,7 @@ export default function SeshDetailsCard({ seshObj }) {
 
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
-      deleteSesh(seshObj.firebaseKey).then(() => router.push('/sesh'));
+      deleteSession(seshObj.firebaseKey).then(() => router.push('/sesh'));
     }
   };
 
@@ -78,7 +77,7 @@ export default function SeshDetailsCard({ seshObj }) {
                     className="btn editBtn"
                     id={mySesh.firebaseKey}
                     onClick={() => {
-                      removeAttendance(mySesh.firebaseKey).then(() => checkIfAttending());
+                      deleteAttendance(mySesh.firebaseKey).then(() => checkIfAttending());
                     }}
                   >Nevermind
                   </Button>
