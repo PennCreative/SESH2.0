@@ -15,7 +15,7 @@ const getPostById = (id) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const getPostByCreatorId = (creatorId) => new Promise((resolve, reject) => {
+const getPostsByCreatorId = (creatorId) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/myposts/${creatorId}`)
     .then((response) => resolve(response.json()))
     .catch((error) => reject(error));
@@ -57,5 +57,5 @@ const deletePost = (id) => new Promise((resolve, reject) => {
 });
 
 export {
-  getAllPosts, getPostById, getPostByCreatorId, createPost, updatePost, deletePost,
+  getAllPosts, getPostById, getPostsByCreatorId, createPost, updatePost, deletePost,
 };

@@ -11,14 +11,13 @@ import { useAuth } from '../../utils/context/authContext';
 import { createSession, updateSession } from '../../utils/data/api/sessionData';
 
 const initialState = {
-  creator: '',
+  creator_id: '',
   title: '',
   description: '',
   address: '',
   city: '',
   state: '',
-  time: '',
-  image: 'defaultImg.png',
+  session_image_url: 'defaultImg.png',
   contest: false,
 };
 
@@ -43,13 +42,13 @@ export default function SeshForm({ obj }) {
     e.preventDefault();
     if (obj.id) {
       updateSession(formInput)
-        .then(() => router.push(`/sesh/${obj.id}`));
+        .then(() => router.push(`/session/${obj.id}`));
     } else {
       const payload = {
-        ...formInput, creator: user.handle, time: new Date().toLocaleDateString(),
+        ...formInput, creator_id: user.id,
       };
       createSession(payload).then(() => {
-        router.push('/sesh');
+        router.push('/session');
       });
     }
   };
@@ -60,10 +59,10 @@ export default function SeshForm({ obj }) {
       </div>
       <div className="card-body">
         <Row className="mb-3">
-          <Form.Group as={Col} controlId="image">
+          <Form.Group as={Col} controlId="session_image_url">
             <Form.Label>Photo of Spot</Form.Label>
             <InputGroup className="mb-2">
-              <Form.Control value={formInput.image} onChange={handleChange} type="url" name="image" placeholder="" />
+              <Form.Control value={formInput.image} onChange={handleChange} type="url" name="session_image_url" placeholder="" />
             </InputGroup>
           </Form.Group>
           <Form.Group as={Col} controlId="title">
@@ -111,15 +110,14 @@ export default function SeshForm({ obj }) {
 
 SeshForm.propTypes = {
   obj: PropTypes.shape({
-    creator: PropTypes.string,
+    creator_id: PropTypes.string,
     address: PropTypes.string,
     city: PropTypes.string,
     state: PropTypes.string,
-    time: PropTypes.string,
     contest: PropTypes.bool,
     title: PropTypes.string,
-    id: PropTypes.string,
-    image: PropTypes.string,
+    id: PropTypes.number,
+    session_image_url: PropTypes.string,
     uid: PropTypes.string,
     handle: PropTypes.string,
   }),

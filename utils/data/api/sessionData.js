@@ -17,7 +17,7 @@ const getSingleSession = (id) => new Promise((resolve, reject) => {
 });
 
 const getMySessions = (id) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/mysession/${id}`)
+  fetch(`${dbUrl}/mysessions/${id}`)
     .then((response) => resolve(response.json()))
     .catch((error) => reject(error));
 });

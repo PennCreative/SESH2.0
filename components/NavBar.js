@@ -12,12 +12,11 @@ import { getUserById } from '../utils/data/api/userData';
 export default function NavBar() {
   const { user } = useAuth();
   const router = useRouter();
-  const userId = user.id;
 
   const checkIfUserExistsThenRoute = () => {
     getUserById(user.id).then((response) => {
       if (response) {
-        router.push(`/profile/${userId}}`);
+        router.push(`/profile/${user.id}`);
       } else {
         router.push('/profile/new');
       }

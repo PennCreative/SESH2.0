@@ -14,7 +14,7 @@ export default function MySeshCard({ obj, onUpdate }) {
 
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${obj.title}?`)) {
-      deleteSession(obj.firebaseKey).then(() => onUpdate());
+      deleteSession(obj.id).then(() => onUpdate());
     }
   };
 
@@ -22,15 +22,15 @@ export default function MySeshCard({ obj, onUpdate }) {
     <>
       <Card className="seshcard">
         <Link href={`/sesh/${obj?.firebaseKey}`} passHref>
-          <Card.Img className="seshCardImg" variant="top" src={obj.image} />
+          <Card.Img className="seshCardImg" variant="top" src={obj?.session_image_url} />
         </Link>
         <Card.Body className="smallCard">
           <Card.Title>{obj.title}</Card.Title>
           <Card.Body>
-            {obj?.creator === user.handle
+            {obj?.creator.id === user.id
               ? (
                 <>
-                  <Link href={`/sesh/edit/${obj?.firebaseKey}`} passHref>
+                  <Link href={`/session/edit/${obj?.id}`} passHref>
                     <Button className="smallBtn" variant="outline-primary"><AiFillEdit /></Button>
                   </Link>
                   <Button className="smallBtn" variant="outline-danger" onClick={deleteThisSesh}><BsFillTrashFill /></Button>
@@ -45,12 +45,15 @@ export default function MySeshCard({ obj, onUpdate }) {
 }
 MySeshCard.propTypes = {
   obj: PropTypes.shape({
+    id: PropTypes.number,
     title: PropTypes.string,
     city: PropTypes.string,
     state: PropTypes.string,
-    creator: PropTypes.string,
+    creator: PropTypes.shape({
+      id: PropTypes.number,
+    }),
     name: PropTypes.string,
-    image: PropTypes.string,
+    session_image_url: PropTypes.string,
     link: PropTypes.string,
     description: PropTypes.string,
     time: PropTypes.string,
