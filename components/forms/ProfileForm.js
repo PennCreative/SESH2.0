@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import useRouter from 'next/router';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -15,14 +15,17 @@ import { updateUser } from '../../utils/data/api/userData';
 
 export default function ProfileForm({ user, onUpdate }) {
   const router = useRouter;
-
   const [formInput, setFormInput] = useState({
-    firstName: '',
-    lastName: '',
+    id: user.id,
+    email: user.email,
+    active: 1,
+    is_staff: false,
+    first_name: '',
+    last_name: '',
     handle: '',
     ride: '',
     bio: '',
-    image: '',
+    profile_image_url: '',
     city: '',
     state: '',
     uid: '',
@@ -45,19 +48,23 @@ export default function ProfileForm({ user, onUpdate }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
+      id: user.id,
+      email: user.email,
+      active: 1,
+      is_staff: false,
       uid: formInput.uid,
-      first_name: formInput.firstName,
-      last_name: formInput.lastName,
+      first_name: formInput.first_name,
+      last_name: formInput.last_name,
       handle: formInput.handle,
       ride: formInput.ride,
       bio: formInput.bio,
-      profile_image_url: formInput.image,
+      profile_image_url: formInput.profile_image_url,
       city: formInput.city,
       state: formInput.state,
     };
     if (user.id) {
-      updateUser(userData, user.id);
-      router.push(`../../users/${user.id}`);
+      updateUser(userData, user.id)
+        .then(() => router.push(`../../profile/${user.id}`));
     } else {
       registerUser(userData).then(() => onUpdate(user.id));
     }
@@ -73,7 +80,7 @@ export default function ProfileForm({ user, onUpdate }) {
 
           <Form.Group as={Col} controlId="image">
             <Form.Label>Profile Image</Form.Label>
-            <Form.Control value={formInput.image} onChange={handleChange} type="url" name="image" placeholder="Image Url" />
+            <Form.Control value={formInput.profile_image_url} onChange={handleChange} type="url" name="profile_image_url" placeholder="Image Url" />
           </Form.Group>
           <Form.Group as={Col} controlId="handle">
             <Form.Label>Nickname</Form.Label>
@@ -97,14 +104,14 @@ export default function ProfileForm({ user, onUpdate }) {
         </Row>
         <Row className="mb-3">
 
-          <Form.Group as={Col} controlId="firstName">
+          <Form.Group as={Col} controlId="first_name">
             <Form.Label>First Name</Form.Label>
-            <Form.Control value={formInput.firstName} onChange={handleChange} name="firstName" type="text" placeholder="John" />
+            <Form.Control value={formInput.first_name} onChange={handleChange} name="first_name" type="text" placeholder="John" />
           </Form.Group>
 
-          <Form.Group as={Col} controlId="lastName">
+          <Form.Group as={Col} controlId="last_name">
             <Form.Label>Last Name</Form.Label>
-            <Form.Control value={formInput.lastName} onChange={handleChange} name="lastName" type="text" placeholder="Doe" />
+            <Form.Control value={formInput.last_name} onChange={handleChange} name="last_name" type="text" placeholder="Doe" />
           </Form.Group>
 
         </Row>
@@ -141,6 +148,7 @@ ProfileForm.propTypes = {
   user: PropTypes.shape({
     uid: PropTypes.string,
     id: PropTypes.number,
+    email: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

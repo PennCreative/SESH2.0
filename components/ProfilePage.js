@@ -9,6 +9,7 @@ export default function ProfilePage(
     firstName, lastName, handle, image, city, state, ride, postObj, attendingObj, eventObj, onUpdate,
   },
 ) {
+  console.log(ride);
   return (
     <>
       <div className="profilePage">

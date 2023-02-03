@@ -14,7 +14,7 @@ export default function ShowSesh() {
   const router = useRouter();
   const { user } = useAuth();
   const { id } = router.query;
-  const [attendanceDetails, setAttendanceDetails] = useState({});
+  const [attendanceDetails, setAttendanceDetails] = useState([]);
   const [attending, setAttending] = useState([]);
   const [sesh, setSesh] = useState([]);
   const [mySesh, setMySesh] = useState([]);
@@ -22,7 +22,8 @@ export default function ShowSesh() {
   const checkIfAttending = () => {
     getSessionAttendance(id).then((response) => {
       setAttendanceDetails(response);
-      const match = attendanceDetails.attendees?.filter((obj) => obj.attendeeId === user.handle);
+
+      const match = attendanceDetails?.filter((obj) => obj.attendee === user.id);
       if (match?.length > 0) {
         setAttending(true);
         setMySesh(...match);
@@ -34,7 +35,8 @@ export default function ShowSesh() {
 
   useEffect(() => {
     checkIfAttending();
-  }, [attendanceDetails]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     getSingleSession(id).then(setSesh);
@@ -50,13 +52,13 @@ export default function ShowSesh() {
     <>
       <div className="detailPage">
         <Card className="cardDetails">
-          <Card.Img className="cardDetailImg" src={sesh?.image} />
+          <Card.Img className="cardDetailImg" src={sesh?.session_image_url} />
           <div className="cardDetailsRightSide">
             <Card.Body className="cardDetailBody">
               <Card.Title><h1>{sesh?.title}</h1></Card.Title>
               <Card.Subtitle className="cardDetailSubtitle">
-                <Link href={`/profile/${sesh?.creator}`} passHref>
-                  <p className="upperCase">@{sesh?.creator}&nbsp;</p>
+                <Link href={`/profile/${user.id}`} passHref>
+                  <p className="upperCase">@{sesh?.Title}&nbsp;</p>
                 </Link>
                 <p> created an event in <b> {sesh?.city}, {sesh?.state}</b></p>
               </Card.Subtitle>
@@ -67,9 +69,9 @@ export default function ShowSesh() {
               </Card.Text>
             </Card.Body>
             <div className="cardDetailsBtn">
-              {sesh?.creator === user.handle ? (
+              {sesh?.creator_id === user.id ? (
                 <>
-                  <Link href={`/sesh/edit/${sesh?.firebaseKey}`} passHref>
+                  <Link href={`/session/edit/${sesh?.id}`} passHref>
                     <Button className="editBtn" variant="primary"><AiFillEdit /></Button>
                   </Link>
                   <Button variant="danger" onClick={deleteThisSesh}><BsFillTrashFill /></Button>
@@ -82,9 +84,9 @@ export default function ShowSesh() {
                       type="button"
                       variant="primary"
                       className="btn editBtn"
-                      id={mySesh.firebaseKey}
+                      id={mySesh.id}
                       onClick={() => {
-                        deleteAttendance(mySesh.firebaseKey).then(() => checkIfAttending());
+                        deleteAttendance(mySesh.id).then(() => checkIfAttending());
                       }}
                     >Nevermind
                     </Button>
@@ -96,8 +98,8 @@ export default function ShowSesh() {
                     variant="primary"
                     onClick={() => {
                       const payload = {
-                        attendeeId: user.handle,
-                        eventId: sesh.firebaseKey,
+                        attendee: user.id,
+                        session: sesh.id,
                       };
                       createAttendance(payload).then(() => checkIfAttending());
                     }}
@@ -123,5 +125,5 @@ ShowSesh.propTypes = {
   link: PropTypes.string,
   description: PropTypes.string,
   time: PropTypes.string,
-  firebaseKey: PropTypes.string,
+  id: PropTypes.string,
 }.isRequired;

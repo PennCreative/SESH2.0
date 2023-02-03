@@ -8,7 +8,7 @@ import { AiFillEdit } from 'react-icons/ai';
 import Link from 'next/link';
 import { useAuth } from '../utils/context/authContext';
 import { deleteSession } from '../utils/data/api/sessionData';
-import { createAttendance, deleteAttendance, getSingleAttendance } from '../utils/data/api/attendanceData';
+import { createAttendance, deleteAttendance, getSessionAttendance } from '../utils/data/api/attendanceData';
 
 export default function SeshDetailsCard({ seshObj }) {
   const router = useRouter();
@@ -16,9 +16,9 @@ export default function SeshDetailsCard({ seshObj }) {
   const [attendanceDetails, setAttendanceDetails] = useState({});
   const [attending, setAttending] = useState([]);
   const [mySesh, setMySesh] = useState({});
-
+  console.log(seshObj);
   const checkIfAttending = () => {
-    getSingleAttendance(seshObj?.firebaseKey).then((response) => {
+    getSessionAttendance(seshObj?.id).then((response) => {
       setAttendanceDetails(response);
       const match = attendanceDetails.attendees?.filter((obj) => obj.attendeeId === user.handle);
       if (match?.length > 0) {
@@ -35,15 +35,15 @@ export default function SeshDetailsCard({ seshObj }) {
   }, []);
 
   const deleteThisSesh = () => {
-    if (window.confirm(`Delete ${seshObj.firebaseKey}?`)) {
-      deleteSession(seshObj.firebaseKey).then(() => router.push('/sesh'));
+    if (window.confirm(`Delete ${seshObj.id}?`)) {
+      deleteSession(seshObj.id).then(() => router.push('/session'));
     }
   };
 
   return (
     <div className="detailPage">
       <Card className="cardDetails">
-        <Card.Img className="cardDetailImg" src={seshObj.image} />
+        <Card.Img className="cardDetailImg" src={seshObj?.session_image_url} />
         <div className="cardDetailsRightSide">
           <Card.Body className="cardDetailBody">
             <Card.Title><h1>{seshObj?.title}</h1></Card.Title>
@@ -62,7 +62,7 @@ export default function SeshDetailsCard({ seshObj }) {
           <div className="cardDetailsBtn">
             {seshObj?.creator === user.handle ? (
               <>
-                <Link href={`/sesh/edit/${seshObj?.firebaseKey}`} passHref>
+                <Link href={`/sesh/edit/${seshObj?.id}`} passHref>
                   <Button className="editBtn" variant="primary"><AiFillEdit /></Button>
                 </Link>
                 <Button variant="danger" onClick={deleteThisSesh}><BsFillTrashFill /></Button>
@@ -75,9 +75,9 @@ export default function SeshDetailsCard({ seshObj }) {
                     type="button"
                     variant="primary"
                     className="btn editBtn"
-                    id={mySesh.firebaseKey}
+                    id={mySesh.id}
                     onClick={() => {
-                      deleteAttendance(mySesh.firebaseKey).then(() => checkIfAttending());
+                      deleteAttendance(mySesh.id).then(() => checkIfAttending());
                     }}
                   >Nevermind
                   </Button>
@@ -90,7 +90,7 @@ export default function SeshDetailsCard({ seshObj }) {
                   onClick={() => {
                     const payload = {
                       attendeeId: user.handle,
-                      eventId: seshObj.firebaseKey,
+                      eventId: seshObj.id,
                     };
                     createAttendance(payload).then(() => checkIfAttending());
                   }}
@@ -111,9 +111,8 @@ SeshDetailsCard.propTypes = {
   state: PropTypes.string,
   creator: PropTypes.string,
   name: PropTypes.string,
-  image: PropTypes.string,
+  session_image_url: PropTypes.string,
   link: PropTypes.string,
   description: PropTypes.string,
-  time: PropTypes.string,
-  firebaseKey: PropTypes.string,
+  id: PropTypes.string,
 }.isRequired;

@@ -8,7 +8,7 @@ import { useAuth } from '../../utils/context/authContext';
 import { createPost, updatePost } from '../../utils/data/api/postData';
 
 const initialState = {
-  post: '',
+  content: '',
 };
 
 export default function PostForm({ obj, onUpdate }) {
@@ -17,7 +17,7 @@ export default function PostForm({ obj, onUpdate }) {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (obj.firebaseKey) setFormInput(obj);
+    if (obj.id) setFormInput(obj);
   }, [obj, user]);
 
   const handleChange = (e) => {
@@ -30,11 +30,11 @@ export default function PostForm({ obj, onUpdate }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.firebaseKey) {
+    if (obj.id) {
       updatePost(formInput)
         .then(() => router.push(`/profile/${obj.creator}`));
     } else {
-      const payload = { ...formInput, creator: user.handle, time: new Date().toLocaleDateString() };
+      const payload = { ...formInput, creator: user.id };
       createPost(payload).then(() => {
         onUpdate();
         setFormInput(initialState);
@@ -45,11 +45,11 @@ export default function PostForm({ obj, onUpdate }) {
     <>
       <Card className="postCardForm">
         <Card.Body>
-          <Form.Group className="mb-3" controlId="post">
-            <Form.Control as="textarea" rows={3} value={formInput.post} onChange={handleChange} type="text" name="post" placeholder="What's on your mind" />
+          <Form.Group className="mb-3" controlId="content">
+            <Form.Control as="textarea" rows={3} value={formInput.content} onChange={handleChange} type="text" name="content" placeholder="What's on your mind" />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={handleSubmit}>
-            {obj.firebaseKey ? 'Update' : 'Create'} Post
+            {obj.id ? 'Update' : 'Create'} Post
           </Button>
         </Card.Body>
       </Card>
@@ -59,11 +59,24 @@ export default function PostForm({ obj, onUpdate }) {
 
 PostForm.propTypes = {
   obj: PropTypes.shape({
-    post: PropTypes.string,
-    time: PropTypes.string,
-    creator: PropTypes.string,
+    content: PropTypes.string,
+    creator: PropTypes.shape({
+      id: PropTypes.number,
+      email: PropTypes.number,
+      active: PropTypes.number,
+      is_staff: PropTypes.bool,
+      uid: PropTypes.string,
+      first_name: PropTypes.string,
+      last_name: PropTypes.string,
+      handle: PropTypes.string,
+      ride: PropTypes.string,
+      bio: PropTypes.string,
+      profile_image_url: PropTypes.string,
+      city: PropTypes.string,
+      state: PropTypes.string,
+    }),
     uid: PropTypes.string,
-    firebaseKey: PropTypes.string,
+    id: PropTypes.number,
   }),
   onUpdate: PropTypes.func.isRequired,
 };

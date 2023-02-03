@@ -24,7 +24,7 @@ export default function ShowAllSessions() {
           variant="primary"
           type="submit"
           onClick={() => {
-            router.push('/sesh/new');
+            router.push('/session/new');
           }}
         >Create Session
         </Button>

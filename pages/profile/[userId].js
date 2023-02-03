@@ -6,36 +6,37 @@ import Button from 'react-bootstrap/Button';
 import { FaShare } from 'react-icons/fa';
 import { useAuth } from '../../utils/context/authContext';
 import { getUserById } from '../../utils/data/api/userData';
-// import { getAttending } from '../../api/attendanceData';
-import { getAllPosts } from '../../utils/data/api/postData';
+// import { getWhoFollowsMe, getFollowedByMe } from '../../utils/data/api/followData';
+import { getMyAttendances } from '../../utils/data/api/attendanceData';
+import { getPostsByCreatorId } from '../../utils/data/api/postData';
 import { getMySessions } from '../../utils/data/api/sessionData';
 import ProfilePagination from '../../components/ProfilePagination';
 
 export default function ViewProfile() {
   const [userDetails, setUserDetails] = useState({});
-  // const [attending, setAttending] = useState({});
+  const [attending, setAttending] = useState([]);
   const { user } = useAuth();
-  const [event, setEvent] = useState([]);
+  const [mySessions, setMySessions] = useState([]);
   const [posts, setPosts] = useState({});
   const router = useRouter();
-  const { id } = router.query;
+  const id = parseInt(router.asPath.split('/')[2], 10);
 
   const profilePageDetails = () => {
-    getAllPosts().then(setPosts);
+    getPostsByCreatorId(id).then(setPosts);
   };
 
-  const update = () => {
-    getMySessions(id).then(setEvent);
-    // getAttending(Id).then(setAttending);
+  const profileDetails = () => {
+    getMySessions(id).then(setMySessions);
+    getMyAttendances(id).then(setAttending);
     getUserById(id).then(setUserDetails);
     profilePageDetails();
   };
 
   useEffect(() => {
-    update();
+    profileDetails();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
+  console.log(attending.length);
   return (
     <>
       <div className="profilePage">
@@ -48,19 +49,22 @@ export default function ViewProfile() {
         />
         <div className="profileContent">
           <div className="profileLeftSide">
-            <img className="profilePic" src={userDetails?.image} alt="profile pic" />
+            <img className="profilePic" src={userDetails?.profile_image_url} alt="profile pic" />
             <div className="userDetailSection">
-              <h3>{userDetails?.firstName} {userDetails?.lastName}</h3>
-              <h5>@{userDetails?.Id}</h5>
+              <h3>{userDetails?.first_name} {userDetails?.last_name}</h3>
+              <sup>Followers:  Following:</sup>
+              <h5>@{userDetails?.handle}</h5>
             </div>
             <div className="btnGroup">
-              {id === user.Id
+              {id === user.id
                 ? (
                   <Link href={`/profile/edit/${id}`} passHref>
                     <Button variant="primary">EDIT</Button>
                   </Link>
                 )
-                : ''}
+                : (
+                  <Button variant="primary">Follow</Button>
+                )}
 
               <Button variant="primary"><FaShare /> </Button>
             </div>
@@ -69,7 +73,7 @@ export default function ViewProfile() {
             </div>
           </div>
           <div className="profileRightSide">
-            <ProfilePagination id={id} posts={posts} events={event} onUpdate={update} />
+            <ProfilePagination id={id} posts={posts} events={mySessions} onUpdate={profileDetails} />
           </div>
         </div>
       </div>
