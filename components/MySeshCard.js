@@ -21,7 +21,7 @@ export default function MySeshCard({ obj, onUpdate }) {
   return (
     <>
       <Card className="seshcard">
-        <Link href={`/sesh/${obj?.firebaseKey}`} passHref>
+        <Link href={`/session/${obj?.id}`} passHref>
           <Card.Img className="seshCardImg" variant="top" src={obj?.session_image_url} />
         </Link>
         <Card.Body className="smallCard">
@@ -57,7 +57,6 @@ MySeshCard.propTypes = {
     link: PropTypes.string,
     description: PropTypes.string,
     time: PropTypes.string,
-    firebaseKey: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

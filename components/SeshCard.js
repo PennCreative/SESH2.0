@@ -8,7 +8,7 @@ export default function SeshCard({ obj }) {
     <>
       <Card className="seshcard">
         <Link href={`/session/${obj?.id}`} passHref>
-          <Card.Img className="seshCardImg" variant="top" src={obj?.creator.profile_image_url} />
+          <Card.Img className="seshCardImg" variant="top" src={obj?.session_image_url} />
         </Link>
         <Card.Body>
           <Card.Title>{obj?.title}</Card.Title>
@@ -34,7 +34,7 @@ SeshCard.propTypes = {
       profile_image_url: PropTypes.string,
     }),
     name: PropTypes.string,
-    image: PropTypes.string,
+    session_image_url: PropTypes.string,
     link: PropTypes.string,
     description: PropTypes.string,
     time: PropTypes.string,

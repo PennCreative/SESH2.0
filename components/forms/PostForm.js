@@ -11,14 +11,14 @@ const initialState = {
   content: '',
 };
 
-export default function PostForm({ obj, onUpdate }) {
+export default function PostForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
     if (obj.id) setFormInput(obj);
-  }, [obj, user]);
+  }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,15 +32,15 @@ export default function PostForm({ obj, onUpdate }) {
     e.preventDefault();
     if (obj.id) {
       updatePost(formInput)
-        .then(() => router.push(`/profile/${obj.creator}`));
+        .then(() => router.push(`/profile/${user.id}`));
     } else {
       const payload = { ...formInput, creator: user.id };
       createPost(payload).then(() => {
-        onUpdate();
-        setFormInput(initialState);
+        router.push(`/profile/${user.id}`);
       });
     }
   };
+
   return (
     <>
       <Card className="postCardForm">
@@ -62,8 +62,7 @@ PostForm.propTypes = {
     content: PropTypes.string,
     creator: PropTypes.shape({
       id: PropTypes.number,
-      email: PropTypes.number,
-      active: PropTypes.number,
+      active: PropTypes.bool,
       is_staff: PropTypes.bool,
       uid: PropTypes.string,
       first_name: PropTypes.string,
@@ -75,10 +74,8 @@ PostForm.propTypes = {
       city: PropTypes.string,
       state: PropTypes.string,
     }),
-    uid: PropTypes.string,
     id: PropTypes.number,
   }),
-  onUpdate: PropTypes.func.isRequired,
 };
 
 PostForm.defaultProps = {

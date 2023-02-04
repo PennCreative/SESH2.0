@@ -13,11 +13,11 @@ import { createAttendance, deleteAttendance, getSessionAttendance } from '../../
 export default function ShowSesh() {
   const router = useRouter();
   const { user } = useAuth();
-  const { id } = router.query;
   const [attendanceDetails, setAttendanceDetails] = useState([]);
   const [attending, setAttending] = useState([]);
   const [sesh, setSesh] = useState([]);
   const [mySesh, setMySesh] = useState([]);
+  const id = parseInt(router.asPath.split('/')[2], 10);
 
   const checkIfAttending = () => {
     getSessionAttendance(id).then((response) => {
@@ -41,7 +41,7 @@ export default function ShowSesh() {
   useEffect(() => {
     getSingleSession(id).then(setSesh);
   }, [id]);
-
+  console.log(sesh);
   const deleteThisSesh = () => {
     if (window.confirm(`Delete ${id}?`)) {
       deleteSession(id).then(() => router.push('/sesh'));
@@ -58,7 +58,7 @@ export default function ShowSesh() {
               <Card.Title><h1>{sesh?.title}</h1></Card.Title>
               <Card.Subtitle className="cardDetailSubtitle">
                 <Link href={`/profile/${user.id}`} passHref>
-                  <p className="upperCase">@{sesh?.Title}&nbsp;</p>
+                  <p className="upperCase">@{sesh?.creator?.handle}&nbsp;</p>
                 </Link>
                 <p> created an event in <b> {sesh?.city}, {sesh?.state}</b></p>
               </Card.Subtitle>
@@ -69,7 +69,7 @@ export default function ShowSesh() {
               </Card.Text>
             </Card.Body>
             <div className="cardDetailsBtn">
-              {sesh?.creator_id === user.id ? (
+              {sesh?.creator?.id === user.id ? (
                 <>
                   <Link href={`/session/edit/${sesh?.id}`} passHref>
                     <Button className="editBtn" variant="primary"><AiFillEdit /></Button>

@@ -8,9 +8,13 @@ export default function EditPost() {
   const router = useRouter();
   const { id } = router.query;
 
-  useEffect(() => {
+  const getPosts = () => {
     getPostById(id).then(setEditPost);
+  };
+
+  useEffect(() => {
+    getPosts();
   }, [id]);
 
-  return (<PostForm obj={editPost} />);
+  return (<PostForm obj={editPost} onUpdate={getPosts} />);
 }

@@ -11,13 +11,13 @@ import { useAuth } from '../../utils/context/authContext';
 import { createSession, updateSession } from '../../utils/data/api/sessionData';
 
 const initialState = {
-  creator_id: '',
+  creator: 0,
   title: '',
   description: '',
   address: '',
   city: '',
   state: '',
-  session_image_url: 'defaultImg.png',
+  session_image_url: '',
   contest: false,
 };
 
@@ -41,7 +41,7 @@ export default function SeshForm({ obj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.id) {
-      updateSession(formInput)
+      updateSession(formInput, obj.id)
         .then(() => router.push(`/session/${obj.id}`));
     } else {
       const payload = {
@@ -52,6 +52,7 @@ export default function SeshForm({ obj }) {
       });
     }
   };
+
   return (
     <div onSubmit={handleSubmit} className="card cardForm text-center text-dark bg-light mb-3">
       <div className="card-header">
@@ -62,7 +63,7 @@ export default function SeshForm({ obj }) {
           <Form.Group as={Col} controlId="session_image_url">
             <Form.Label>Photo of Spot</Form.Label>
             <InputGroup className="mb-2">
-              <Form.Control value={formInput.image} onChange={handleChange} type="url" name="session_image_url" placeholder="" />
+              <Form.Control value={formInput.session_image_url} onChange={handleChange} type="url" name="session_image_url" placeholder="" />
             </InputGroup>
           </Form.Group>
           <Form.Group as={Col} controlId="title">
@@ -110,10 +111,14 @@ export default function SeshForm({ obj }) {
 
 SeshForm.propTypes = {
   obj: PropTypes.shape({
-    creator_id: PropTypes.string,
+    creator: PropTypes.shape({
+      id: PropTypes.number,
+      handle: PropTypes.string,
+    }),
     address: PropTypes.string,
     city: PropTypes.string,
     state: PropTypes.string,
+    description: PropTypes.string,
     contest: PropTypes.bool,
     title: PropTypes.string,
     id: PropTypes.number,
