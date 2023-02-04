@@ -15,15 +15,14 @@ export default function PostCard({ postObj, onUpdate }) {
       deletePost(postObj.id).then(() => onUpdate());
     }
   };
-  console.log(postObj);
+
   return (
     <Card className="postCard">
       <Card.Body className="left">
-        <Link href={`/profile/${postObj?.creator}`} passHref>
-          <Card.Title>{postObj?.creator}</Card.Title>
+        <Link href={`/profile/${postObj?.creator.id}`} passHref>
+          <Card.Title>@{postObj?.creator.handle}</Card.Title>
         </Link>
-        <Card.Subtitle><sup>{postObj?.time}</sup></Card.Subtitle>
-        <Card.Title>{postObj?.post}</Card.Title>
+        <Card.Title>{postObj?.content}</Card.Title>
       </Card.Body>
       <Card.Body className="right">
         {postObj?.creator.id === user.id
@@ -46,15 +45,12 @@ export default function PostCard({ postObj, onUpdate }) {
 
 PostCard.propTypes = {
   postObj: PropTypes.shape({
-    name: PropTypes.string,
+    id: PropTypes.number,
+    content: PropTypes.string,
     creator: PropTypes.shape({
       id: PropTypes.number,
+      handle: PropTypes.string,
     }),
-    image: PropTypes.string,
-    link: PropTypes.string,
-    post: PropTypes.string,
-    time: PropTypes.string,
-    id: PropTypes.number,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

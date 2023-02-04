@@ -10,17 +10,19 @@ import PostCard from './PostCard';
 import { getMySessions } from '../utils/data/api/sessionData';
 import { getAllPosts } from '../utils/data/api/postData';
 // import { useAuth } from '../utils/context/authContext';
+import { getMyAttendances } from '../utils/data/api/attendanceData';
 import { getUserById } from '../utils/data/api/userData';
 
-export default function ProfilePagination() {
+export default function ProfilePagination({ posts }) {
   const router = useRouter();
   const [user, setUser] = useState({});
   const [mySeshes, setMySeshes] = useState([]);
-  const [allPosts, setAllPosts] = useState();
+  const [allPosts, setAllPosts] = useState([]);
+  const [attending, setAttending] = useState([]);
   const profileId = parseInt(router.asPath.split('/')[2], 10);
 
   const getPosts = () => {
-    getAllPosts().then(setAllPosts);
+    getAllPosts().then((response) => setAllPosts(response));
   };
   const getMySeshes = () => {
     getMySessions(profileId).then(setMySeshes);
@@ -28,9 +30,15 @@ export default function ProfilePagination() {
   const getUser = () => {
     getUserById(profileId).then(setUser);
   };
+  const getSessionsAttending = () => {
+    getMyAttendances(profileId).then(setAttending);
+  };
+  console.log(allPosts, attending);
+
   useEffect(() => {
     getAllPosts();
     getMySeshes();
+    getSessionsAttending();
     getUser();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
@@ -45,7 +53,7 @@ export default function ProfilePagination() {
       <Tab eventKey="home" title="Posts">
         {user.id === profileId ? <PostForm onUpdate={getPosts} /> : ''}
         <div className="thePosts">
-          {allPosts?.map((post) => (
+          {posts?.map((post) => (
             <PostCard postObj={post} key={post.id} onUpdate={getPosts} />
           ))}
         </div>
@@ -55,7 +63,7 @@ export default function ProfilePagination() {
           variant="primary"
           type="submit"
           onClick={() => {
-            router.push('/sesh/new');
+            router.push('/session/new');
           }}
         >Create a Sesh
         </Button>

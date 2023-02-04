@@ -7,18 +7,24 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import { AiFillEdit } from 'react-icons/ai';
 import Link from 'next/link';
 import { useAuth } from '../utils/context/authContext';
-import { deleteSession } from '../utils/data/api/sessionData';
+import { deleteSession, getSingleSession } from '../utils/data/api/sessionData';
 import { createAttendance, deleteAttendance, getSessionAttendance } from '../utils/data/api/attendanceData';
 
-export default function SeshDetailsCard({ seshObj }) {
+export default function SeshDetailsCard() {
   const router = useRouter();
   const { user } = useAuth();
   const [attendanceDetails, setAttendanceDetails] = useState({});
   const [attending, setAttending] = useState([]);
   const [mySesh, setMySesh] = useState({});
-  console.log(seshObj);
+  const seshId = parseInt(router.asPath.split('/')[2], 10);
+  const [sesh, setSesh] = useState({});
+
+  const getSesh = () => {
+    getSingleSession(seshId).then(setSesh);
+  };
+
   const checkIfAttending = () => {
-    getSessionAttendance(seshObj?.id).then((response) => {
+    getSessionAttendance(sesh?.id).then((response) => {
       setAttendanceDetails(response);
       const match = attendanceDetails.attendees?.filter((obj) => obj.attendeeId === user.handle);
       if (match?.length > 0) {
@@ -31,38 +37,39 @@ export default function SeshDetailsCard({ seshObj }) {
   };
   useEffect(() => {
     checkIfAttending();
+    getSesh();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteThisSesh = () => {
-    if (window.confirm(`Delete ${seshObj.id}?`)) {
-      deleteSession(seshObj.id).then(() => router.push('/session'));
+    if (window.confirm(`Delete ${sesh.id}?`)) {
+      deleteSession(sesh.id).then(() => router.push('/session'));
     }
   };
-
+  console.log(sesh);
   return (
     <div className="detailPage">
       <Card className="cardDetails">
-        <Card.Img className="cardDetailImg" src={seshObj?.session_image_url} />
+        <Card.Img className="cardDetailImg" src={sesh?.session_image_url} />
         <div className="cardDetailsRightSide">
           <Card.Body className="cardDetailBody">
-            <Card.Title><h1>{seshObj?.title}</h1></Card.Title>
+            <Card.Title><h1>{sesh?.title}</h1></Card.Title>
             <Card.Subtitle className="cardDetailSubtitle">
-              <Link href={`/profile/${seshObj?.creator}`} passHref>
-                <p className="upperCase">@{seshObj?.creator}&nbsp;</p>
+              <Link href={`/profile/${sesh?.creator.id}`} passHref>
+                <p className="upperCase">@{sesh?.creator}&nbsp;</p>
               </Link>
-              <p> created an event in <b> {seshObj?.city}, {seshObj?.state}</b></p>
+              <p> created an event in <b> {sesh?.city}, {sesh?.state}</b></p>
             </Card.Subtitle>
-            <p>{seshObj?.time}</p>
+            <p>{sesh?.time}</p>
             <Card.Text>
-              {seshObj?.description}
+              {sesh?.description}
               <br />
             </Card.Text>
           </Card.Body>
           <div className="cardDetailsBtn">
-            {seshObj?.creator === user.handle ? (
+            {sesh?.creator === user.id ? (
               <>
-                <Link href={`/sesh/edit/${seshObj?.id}`} passHref>
+                <Link href={`/sesh/edit/${sesh?.id}`} passHref>
                   <Button className="editBtn" variant="primary"><AiFillEdit /></Button>
                 </Link>
                 <Button variant="danger" onClick={deleteThisSesh}><BsFillTrashFill /></Button>
@@ -89,8 +96,8 @@ export default function SeshDetailsCard({ seshObj }) {
                   variant="primary"
                   onClick={() => {
                     const payload = {
-                      attendeeId: user.handle,
-                      eventId: seshObj.id,
+                      attendeeId: user.id,
+                      eventId: sesh.id,
                     };
                     createAttendance(payload).then(() => checkIfAttending());
                   }}

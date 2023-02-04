@@ -10,12 +10,10 @@ export default function editSession() {
   const router = useRouter();
   const { id } = router.query;
 
-  console.log(router, editSesh);
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     getSingleSession(id).then(setEditSesh);
-  }, [router]);
+  }, []);
 
   return (
     <div className="formPage">
